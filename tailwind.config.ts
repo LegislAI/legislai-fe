@@ -9,11 +9,14 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: 'var(--background)',
-        foreground: 'var(--foreground)',
+        dark: '#242423',
+        'dark-medium': '#333333',
+        'dark-light': '#3A3A3A',
+        'custom-gray': '#4f4f4f',
       },
       fontFamily: {
         montserrat: ['var(--font-montserrat)'],
+        raleway: ['var(--font-raleway)'],
       },
     },
   },
