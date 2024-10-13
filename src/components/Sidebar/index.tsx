@@ -1,19 +1,21 @@
 'use client';
 
-import { useSidebar } from './sidebarContext';
+import { useSidebarContext } from './sidebarContext';
 import {
   TbLayoutSidebarLeftCollapse,
   TbLayoutSidebarLeftExpand,
 } from 'react-icons/tb';
-import SidebarButton from './SidebarButton';
 import {
   IoHomeOutline,
   IoSettingsOutline,
   IoSparklesOutline,
 } from 'react-icons/io5';
 
+import SidebarButton from './SidebarButton';
+import SidebarDropdown from './SidebarDropdown';
+
 const SideBar = () => {
-  const { isOpen, toggleSidebar } = useSidebar();
+  const { isOpen, toggleSidebar } = useSidebarContext();
 
   return (
     <>
@@ -27,7 +29,7 @@ const SideBar = () => {
       </button>
 
       <div
-        className={`fixed left-0 top-0 h-screen w-64 bg-gradient-to-tr from-dark-medium to-dark-light transition-transform duration-500 ease-in-out ${
+        className={`fixed left-0 top-0 h-screen w-[270px] bg-gradient-to-tr from-dark-medium to-dark-light transition-transform duration-500 ease-in-out ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
         style={{
@@ -50,9 +52,9 @@ const SideBar = () => {
               <SidebarButton
                 icon={<IoHomeOutline className="text-2xl" />}
                 text="Página Inicial"
-                url=""
+                url="/"
               />
-              <SidebarButton
+              <SidebarDropdown
                 icon="/avatar.svg"
                 text="Assistente Jurídico"
                 url=""

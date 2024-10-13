@@ -1,14 +1,14 @@
 'use client';
 
-import { useSidebar } from '@/components/Sidebar/sidebarContext';
+import { useSidebarContext } from '@/components/Sidebar/sidebarContext';
 import { Card } from '@/components/Card';
 
 export default function HomePage() {
-  const { isOpen } = useSidebar();
+  const { isOpen } = useSidebarContext();
 
   return (
     <div
-      className={`transition-margin flex min-h-screen duration-500 ease-in-out ${isOpen ? 'ml-64' : 'ml-0'} flex-col items-center justify-center bg-gradient-to-t from-green-100 to-green-400`}
+      className={`transition-margin flex min-h-screen duration-500 ease-in-out ${isOpen ? 'ml-[270px]' : 'ml-0'} flex-col items-center justify-center bg-gradient-to-t from-green-100 to-green-400`}
     >
       <div className="text-center text-dark-medium">
         <h1 className="mb-4 text-6xl font-bold text-dark">LegislAI</h1>
