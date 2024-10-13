@@ -1,6 +1,7 @@
 import { ReactNode, isValidElement, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { Tooltip } from 'react-tooltip';
 import { useSidebarContext } from './sidebarContext';
 
 import {
@@ -103,6 +104,9 @@ const SidebarDropdown = ({ icon, text, url }: SidebarDropdownProps) => {
             >
               <div
                 className={`group relative flex w-full flex-row items-center justify-between rounded-md p-2 hover:bg-mine-shaft-700 ${openMenuId === conversation.conversation_id ? 'bg-mine-shaft-700' : ''}`}
+                data-tooltip-id={`tooltip-${conversation.conversation_id}`}
+                data-tooltip-content={conversation.conversation_name}
+                data-tooltip-delay-show={1000}
               >
                 <div className="flex w-full max-w-[90%] flex-row items-center gap-2 overflow-hidden pl-6">
                   <span className="text-clip whitespace-nowrap text-sm">
@@ -145,6 +149,7 @@ const SidebarDropdown = ({ icon, text, url }: SidebarDropdownProps) => {
                   </div>
                 )}
               </div>
+              <Tooltip id={`tooltip-${conversation.conversation_id}`} />
             </Link>
           ))}
           {numberOfConversations < conversations.length && (
