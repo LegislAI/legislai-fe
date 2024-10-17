@@ -1,7 +1,7 @@
 'use client';
 
 import { useSidebarContext } from '@/components/Sidebar/sidebarContext';
-import { Card } from '@/components/Card';
+import Card from '@/components/Card';
 
 export default function HomePage() {
   const { isOpen } = useSidebarContext();
