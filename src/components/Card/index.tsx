@@ -8,7 +8,7 @@ type CardProps = {
   url: string;
 };
 
-export function Card({ title, description, image, url }: CardProps) {
+const Card = ({ title, description, image, url }: CardProps) => {
   return (
     <Link href={url}>
       <div className="lg:transition-duration-1000 flex w-80 cursor-pointer flex-col items-center rounded-xl bg-green-700 p-4 shadow-lg lg:transition-transform lg:hover:scale-105">
@@ -20,4 +20,6 @@ export function Card({ title, description, image, url }: CardProps) {
       </div>
     </Link>
   );
-}
+};
+
+export default Card;
