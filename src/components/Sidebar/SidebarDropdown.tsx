@@ -54,6 +54,7 @@ const SidebarDropdown = ({ icon, text, url }: SidebarDropdownProps) => {
       Object.values(conversationsRaw).map((conversation: Conversation) => ({
         conversation_id: conversation.conversationId,
         conversation_name: conversation.conversationName,
+        conversation_field: conversation.conversationField,
       })),
     [conversationsRaw],
   );
@@ -135,19 +136,22 @@ const SidebarDropdown = ({ icon, text, url }: SidebarDropdownProps) => {
       </Link>
 
       {isHistoryOpen && (
-        <div className="sidebar flex max-h-[400px] flex-col gap-0.5 overflow-y-auto pb-2">
+        <div className="sidebar flex max-h-[450px] flex-col gap-1 overflow-y-auto pb-2">
           {localConversations.map(conversation => (
             <Link
               key={conversation.conversation_id}
               href={`/chat/${conversation.conversation_id}`}
             >
               <div
-                className={`group relative flex w-full flex-row items-center justify-between rounded-md p-2 hover:bg-mine-shaft-700 ${openMenuId === conversation.conversation_id || activeConversation == conversation.conversation_id ? 'bg-mine-shaft-700' : ''}`}
+                className={`group relative flex w-full flex-row items-center justify-between rounded-md px-2 py-1 hover:bg-mine-shaft-700 ${openMenuId === conversation.conversation_id || activeConversation == conversation.conversation_id ? 'bg-mine-shaft-700' : ''}`}
                 data-tooltip-id={`tooltip-${conversation.conversation_id}`}
                 data-tooltip-content={conversation.conversation_name}
                 data-tooltip-delay-show={1000}
               >
-                <div className="flex w-full max-w-[100%] flex-row items-center gap-2 overflow-hidden pl-6">
+                <div className="flex w-full max-w-[100%] flex-col items-start gap-[1px] overflow-hidden pl-4">
+                  <span className="text-xs text-gray-300">
+                    {conversation.conversation_field}
+                  </span>
                   <span className="text-clip whitespace-nowrap text-sm">
                     {conversation.conversation_name}
                   </span>
@@ -194,7 +198,7 @@ const SidebarDropdown = ({ icon, text, url }: SidebarDropdownProps) => {
             </Link>
           ))}
           {numberOfConversations < conversations.length && (
-            <div className="flex w-full flex-col items-center">
+            <div className="mt-1 flex w-full flex-col items-center">
               <button
                 onClick={() =>
                   setNumberOfConversations(numberOfConversations + 8)

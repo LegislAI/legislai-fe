@@ -1,6 +1,7 @@
 export type Conversation = {
   conversationId: string;
   conversationName: string;
+  conversationField: string;
   messages: Message[];
   createdAt: string;
   updatedAt: string;

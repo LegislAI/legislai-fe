@@ -1,6 +1,7 @@
 export interface ConversationApiResponse {
   conversation_id: string;
   conversation_name: string;
+  conversation_field: string;
   messages: MessageApiResponse[];
   created_at: string;
   updated_at: string;
