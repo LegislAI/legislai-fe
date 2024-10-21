@@ -2,6 +2,7 @@
   {
     "conversation_id": "001",
     "conversation_name": "Incentivos para compra de carros elétricos",
+    "conversation_field": "Direito Fiscal",
     "messages": [
       {
         "message_id": "0",
@@ -46,6 +47,7 @@
   {
     "conversation_id": "002",
     "conversation_name": "Alteração ao Código do Trabalho",
+    "conversation_field": "Direito Laboral",
     "messages": [
       {
         "message_id": "0",
@@ -103,12 +105,45 @@
             "url": "https://estudo-teletrabalho.pt/impacto-trabalhadores-independentes-2024"
           }
         ]
+      },
+      {
+        "message_id": "6",
+        "sender": "user",
+        "timestamp": "2024-09-30T14:26:00Z",
+        "message": "E se o empregador se recusar a reembolsar as despesas? Que medidas podem ser tomadas?"
+      },
+      {
+        "message_id": "7",
+        "sender": "ai",
+        "timestamp": "2024-09-30T14:27:35Z",
+        "message": "Nesse caso, o trabalhador pode recorrer à Autoridade para as Condições do Trabalho (ACT) para denunciar a situação. A ACT pode fiscalizar a empresa e aplicar coimas em caso de incumprimento das regras do teletrabalho.",
+        "attachments": [
+          {
+            "content": "Contacto da ACT",
+            "designation": "Denúncia de incumprimento das regras do teletrabalho",
+            "url": "https://www.act.pt/denuncias/teletrabalho/2024"
+          }
+        ]
+      },
+      {
+        "message_id": "8",
+        "sender": "user",
+        "timestamp": "2024-09-30T14:29:00Z",
+        "message": "Obrigado pela informação. Vou verificar os meus direitos e falar com o meu empregador."
+      },
+      {
+        "message_id": "9",
+        "sender": "ai",
+        "timestamp": "2024-09-30T14:30:20Z",
+        "message": "Estamos aqui para ajudar. Se tiver mais alguma questão, não hesite em contactar-nos. Boa sorte!",
+        "attachments": []
       }
     ]
   },
   {
     "conversation_id": "003",
     "conversation_name": "Regulamento de Alojamento Local",
+    "conversation_field": "Direito Civil",
     "messages": [
       {
         "message_id": "0",
@@ -172,6 +207,7 @@
   {
     "conversation_id": "004",
     "conversation_name": "Benefícios Fiscais para Empresas",
+    "conversation_field": "Direito Fiscal",
     "messages": [
       {
         "message_id": "0",
@@ -235,6 +271,7 @@
   {
     "conversation_id": "005",
     "conversation_name": "Ambiente e Sustentabilidade",
+    "conversation_field": "Direito Laboral",
     "messages": [
       {
         "message_id": "0",
@@ -298,6 +335,7 @@
   {
     "conversation_id": "006",
     "conversation_name": "Apoios à Agricultura Biológica",
+    "conversation_field": "Direito do Trabalho",
     "messages": [
       {
         "message_id": "0",
@@ -342,6 +380,7 @@
   {
     "conversation_id": "007",
     "conversation_name": "Novo Regime de Arrendamento Urbano",
+    "conversation_field": "Direito Civil",
     "messages": [
       {
         "message_id": "0",
@@ -386,6 +425,7 @@
   {
     "conversation_id": "008",
     "conversation_name": "Alterações à Lei do Tabaco",
+    "conversation_field": "Direito Comercial",
     "messages": [
       {
         "message_id": "0",
@@ -430,6 +470,7 @@
   {
     "conversation_id": "009",
     "conversation_name": "Regulamentação de Criptomoedas",
+    "conversation_field": "Direito Registo e Notariado",
     "messages": [
       {
         "message_id": "0",
@@ -474,6 +515,7 @@
   {
     "conversation_id": "010",
     "conversation_name": "Apoios ao Empreendedorismo Jovem",
+    "conversation_field": "Direito Civil",
     "messages": [
       {
         "message_id": "0",
@@ -518,6 +560,7 @@
   {
     "conversation_id": "011",
     "conversation_name": "Novas Regras para Serviços Digitais",
+    "conversation_field": "Direito Comercial",
     "messages": [
       {
         "message_id": "0",
@@ -562,6 +605,7 @@
   {
     "conversation_id": "012",
     "conversation_name": "Isenção de IMT para Jovens",
+    "conversation_field": "Direito Registo e Notariado",
     "messages": [
       {
         "message_id": "0",
@@ -606,6 +650,7 @@
   {
     "conversation_id": "013",
     "conversation_name": "Regulamentação do Trabalho Remoto",
+    "conversation_field": "Direito Laboral",
     "messages": [
       {
         "message_id": "0",
