@@ -19,6 +19,7 @@ export const transformConversation = (
   return {
     conversationId: conversation.conversation_id,
     conversationName: conversation.conversation_name,
+    conversationField: conversation.conversation_field,
     messages: conversation.messages.map(message => transformMessage(message)),
     createdAt: conversation.created_at || '',
     updatedAt: conversation.updated_at || '',
