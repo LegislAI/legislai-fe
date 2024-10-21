@@ -5,7 +5,7 @@ import {
   ConversationApiResponse,
   MessageApiResponse,
   AttachmentApiResponse,
-} from '@/types/chat';
+} from '@/types';
 
 export const transformConversations = (
   conversations: ConversationApiResponse[],

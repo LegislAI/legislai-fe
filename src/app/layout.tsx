@@ -1,7 +1,10 @@
 import './globals.css';
 import type { Metadata } from 'next';
 import { raleway } from '@/utils/fonts';
+
+import StoreProvider from './StoreProvider';
 import { SidebarProvider } from '@/components/Sidebar/sidebarContext';
+
 import SideBar from '@/components/Sidebar';
 
 export const metadata: Metadata = {
@@ -17,12 +20,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`bg-gray-100 text-stone-900 ${raleway.className} tracking-wide`}
+        className={`bg-gradient-to-t from-green-200 to-green-700/90 text-stone-900 ${raleway.className} tracking-wide`}
       >
-        <SidebarProvider>
-          <SideBar />
-          <main>{children}</main>
-        </SidebarProvider>
+        <StoreProvider>
+          <SidebarProvider>
+            <SideBar />
+            <main>{children}</main>
+          </SidebarProvider>
+        </StoreProvider>
       </body>
     </html>
   );

@@ -9,6 +9,8 @@ type SidebarContextType = {
   toggleHistoryOpen: () => void;
   numberOfConversations: number;
   setNumberOfConversations: (value: number) => void;
+  activeConversation: string | undefined;
+  changeActiveConversation: (conversationId: string | undefined) => void;
 };
 
 const SidebarContext = createContext<SidebarContextType | undefined>(undefined);
@@ -17,6 +19,9 @@ export const SidebarProvider = ({ children }: { children: ReactNode }) => {
   const [isOpen, setIsOpen] = useState(true);
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
   const [numberOfConversations, setNumberOfConversations] = useState(8);
+  const [activeConversation, setActiveConversation] = useState<
+    string | undefined
+  >(undefined);
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
@@ -24,6 +29,10 @@ export const SidebarProvider = ({ children }: { children: ReactNode }) => {
 
   const toggleHistoryOpen = () => {
     setIsHistoryOpen(!isHistoryOpen);
+  };
+
+  const changeActiveConversation = (conversationId: string | undefined) => {
+    setActiveConversation(conversationId);
   };
 
   return (
@@ -35,6 +44,8 @@ export const SidebarProvider = ({ children }: { children: ReactNode }) => {
         toggleHistoryOpen,
         numberOfConversations,
         setNumberOfConversations,
+        activeConversation,
+        changeActiveConversation,
       }}
     >
       {children}
