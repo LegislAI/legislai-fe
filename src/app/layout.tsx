@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`bg-gradient-to-t from-green-200 to-green-700/90 text-stone-900 ${raleway.className} tracking-wide`}
+        className={`from-green-house-800 to-green-house-950 bg-gradient-to-tr text-stone-900 ${raleway.className} tracking-wide`}
       >
         <StoreProvider>
           <SidebarProvider>

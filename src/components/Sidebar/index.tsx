@@ -29,7 +29,7 @@ const SideBar = () => {
       </button>
 
       <div
-        className={`fixed left-0 top-0 h-screen w-[270px] bg-gradient-to-tr from-dark-medium to-dark-light transition-transform duration-500 ease-in-out ${
+        className={`bg-green-house-950 fixed left-0 top-0 h-screen w-[270px] transition-transform duration-500 ease-in-out ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
         style={{
@@ -45,31 +45,31 @@ const SideBar = () => {
 
         <div className="flex h-full w-full flex-col justify-between px-4 text-gray-100">
           <div>
-            <h1 className="mb-8 mt-20 text-center text-5xl font-bold">
+            <h1 className="mb-6 mt-12 text-center text-3xl font-bold">
               LegislAI
             </h1>
             <div className="flex w-full flex-col gap-1">
               <SidebarButton
-                icon={<IoHomeOutline className="text-2xl" />}
+                icon={<IoHomeOutline className="text-xl" />}
                 text="Página Inicial"
                 url="/"
               />
               <SidebarDropdown
                 icon="/avatar.svg"
                 text="Assistente Jurídico"
-                url=""
+                url="/chat"
               />
             </div>
           </div>
 
           <div className="mb-4">
             <SidebarButton
-              icon={<IoSparklesOutline className="text-2xl" />}
+              icon={<IoSparklesOutline className="text-xl" />}
               text="Sobre"
               url=""
             />
             <SidebarButton
-              icon={<IoSettingsOutline className="text-2xl" />}
+              icon={<IoSettingsOutline className="text-xl" />}
               text="Definições"
               url=""
             />

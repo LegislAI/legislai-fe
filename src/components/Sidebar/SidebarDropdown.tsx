@@ -43,6 +43,7 @@ const SidebarDropdown = ({ icon, text, url }: SidebarDropdownProps) => {
     activeConversation,
     changeActiveConversation,
   } = useSidebarContext();
+
   const pathname = usePathname();
 
   const conversationsRaw = useAppSelector(
@@ -51,11 +52,17 @@ const SidebarDropdown = ({ icon, text, url }: SidebarDropdownProps) => {
 
   const conversations = useMemo(
     () =>
-      Object.values(conversationsRaw).map((conversation: Conversation) => ({
-        conversation_id: conversation.conversationId,
-        conversation_name: conversation.conversationName,
-        conversation_field: conversation.conversationField,
-      })),
+      Object.values(conversationsRaw)
+        .slice() // clone array
+        .sort(
+          (a, b) =>
+            new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime(),
+        )
+        .map((conversation: Conversation) => ({
+          conversation_id: conversation.conversationId,
+          conversation_name: conversation.conversationName,
+          conversation_field: conversation.conversationField,
+        })),
     [conversationsRaw],
   );
 
@@ -108,32 +115,30 @@ const SidebarDropdown = ({ icon, text, url }: SidebarDropdownProps) => {
 
   return (
     <>
-      <Link href={url}>
-        <div className="flex w-full flex-row items-center justify-between rounded-md p-2 hover:bg-mine-shaft-700">
+      <div className="hover:bg-green-house-900 flex w-full flex-row items-center justify-between rounded-md p-2">
+        <Link href={url}>
           <div className="flex w-full flex-row items-center gap-2">
             {typeof icon === 'string' ? (
-              <Image src={icon} alt="icon" width={24} height={24} />
+              <Image src={icon} alt="icon" width={22} height={22} />
             ) : isValidElement(icon) ? (
               icon
             ) : (
               <></>
             )}
-            <span>{text}</span>
+            <span className="text-sm">{text}</span>
           </div>
+        </Link>
 
-          {isHistoryOpen ? (
-            <IoCaretUp
-              onClick={toggleHistoryOpen}
-              className="rounded-md text-2xl text-gray-100 hover:bg-mine-shaft-600"
-            />
-          ) : (
-            <IoCaretDown
-              onClick={toggleHistoryOpen}
-              className="rounded-md text-2xl text-gray-100 hover:bg-mine-shaft-600"
-            />
-          )}
-        </div>
-      </Link>
+        {isHistoryOpen ? (
+          <button onClick={toggleHistoryOpen}>
+            <IoCaretUp className="hover:bg-green-house-800 rounded-md text-xl text-gray-100" />
+          </button>
+        ) : (
+          <button onClick={toggleHistoryOpen}>
+            <IoCaretDown className="hover:bg-green-house-800 rounded-md text-xl text-gray-100" />
+          </button>
+        )}
+      </div>
 
       {isHistoryOpen && (
         <div className="sidebar flex max-h-[450px] flex-col gap-1 overflow-y-auto pb-2">
@@ -143,16 +148,16 @@ const SidebarDropdown = ({ icon, text, url }: SidebarDropdownProps) => {
               href={`/chat/${conversation.conversation_id}`}
             >
               <div
-                className={`group relative flex w-full flex-row items-center justify-between rounded-md px-2 py-1 hover:bg-mine-shaft-700 ${openMenuId === conversation.conversation_id || activeConversation == conversation.conversation_id ? 'bg-mine-shaft-700' : ''}`}
+                className={`hover:bg-green-house-900 group relative flex w-full flex-row items-center justify-between rounded-md px-2 py-1 ${openMenuId === conversation.conversation_id || activeConversation == conversation.conversation_id ? 'bg-green-house-900' : ''}`}
                 data-tooltip-id={`tooltip-${conversation.conversation_id}`}
                 data-tooltip-content={conversation.conversation_name}
                 data-tooltip-delay-show={1000}
               >
                 <div className="flex w-full max-w-[100%] flex-col items-start gap-[1px] overflow-hidden pl-4">
-                  <span className="text-xs text-gray-300">
+                  <span className="text-xxs text-gray-300">
                     {conversation.conversation_field}
                   </span>
-                  <span className="text-clip whitespace-nowrap text-sm">
+                  <span className="text-clip whitespace-nowrap text-xs">
                     {conversation.conversation_name}
                   </span>
                 </div>
@@ -163,33 +168,33 @@ const SidebarDropdown = ({ icon, text, url }: SidebarDropdownProps) => {
                     e.preventDefault();
                     toggleMenu(conversation.conversation_id);
                   }}
-                  className="absolute right-1 rounded-md p-2 opacity-0 group-hover:bg-mine-shaft-700 group-hover:opacity-100"
+                  className="group-hover:bg-green-house-900 absolute right-1 rounded-md p-2 opacity-0 group-hover:opacity-100"
                 >
                   <IoEllipsisHorizontalSharp className="text-lg text-gray-100 opacity-40 hover:opacity-100" />
                 </button>
                 {openMenuId === conversation.conversation_id && (
                   <div
                     ref={menuRef}
-                    className="absolute right-0 top-full z-50 rounded-xl bg-mine-shaft-600 p-1 shadow-lg"
+                    className="bg-green-house-800 absolute right-0 top-full z-50 rounded-xl p-1 shadow-lg"
                   >
                     <button
                       onClick={() =>
                         handleChangeName(conversation.conversation_id)
                       }
-                      className="flex w-full items-center gap-2 p-2 hover:rounded-xl hover:bg-mine-shaft-500"
+                      className="hover:bg-green-house-700 flex w-full items-center gap-2 p-2 hover:rounded-xl"
                     >
-                      <CiEdit className="text-xl text-gray-100" />
-                      <span className="text-sm">Editar nome</span>
+                      <CiEdit className="text-lg text-gray-100" />
+                      <span className="text-xs">Editar nome</span>
                     </button>
 
                     <button
                       onClick={() =>
                         handleRemoveConversation(conversation.conversation_id)
                       }
-                      className="flex w-full items-center gap-2 p-2 hover:rounded-xl hover:bg-mine-shaft-500"
+                      className="hover:bg-green-house-700 flex w-full items-center gap-2 p-2 hover:rounded-xl"
                     >
-                      <IoTrashOutline className="text-xl text-gray-100" />
-                      <span className="text-sm">Remover</span>
+                      <IoTrashOutline className="text-lg text-gray-100" />
+                      <span className="text-xs">Remover</span>
                     </button>
                   </div>
                 )}
