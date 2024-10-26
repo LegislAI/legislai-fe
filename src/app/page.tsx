@@ -7,7 +7,7 @@ import { useSidebarContext } from '@/components/Sidebar/sidebarContext';
 import { loadConversations } from '@/state/conversation/conversationSlice';
 import { transformConversation } from '@/utils/transformer';
 
-import Card from '@/components/Card';
+// import Card from '@/components/Card';
 
 import data from '@/data/conversations.json';
 

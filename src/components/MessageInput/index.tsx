@@ -41,7 +41,7 @@ const ConversationInput = ({ onSendMessage }: ConversationInputProps) => {
     <div className="relative flex w-full gap-4 rounded-2xl shadow-lg">
       <textarea
         ref={textareaRef}
-        className="bg-green-house-950 w-full resize-none rounded-2xl py-4 pl-6 pr-16 text-sm text-gray-200 placeholder-gray-200 outline-none placeholder:text-sm"
+        className="w-full resize-none rounded-2xl bg-green-house-950 py-4 pl-6 pr-16 text-sm text-gray-200 placeholder-gray-200 outline-none placeholder:text-sm"
         rows={1}
         placeholder="Escreva uma mensagem..."
         value={inputValue}
