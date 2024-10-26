@@ -29,7 +29,7 @@ const SideBar = () => {
       </button>
 
       <div
-        className={`bg-green-house-950 fixed left-0 top-0 h-screen w-[270px] transition-transform duration-500 ease-in-out ${
+        className={`fixed left-0 top-0 h-screen w-[270px] bg-green-house-950 transition-transform duration-500 ease-in-out ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
         style={{
