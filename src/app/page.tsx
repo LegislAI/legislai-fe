@@ -36,25 +36,25 @@ export default function HomePage() {
 
   return (
     <div
-      className={`flex min-h-screen bg-gradient-to-t from-green-200 to-green-700 duration-500 ease-in-out ${isOpen ? 'ml-[270px]' : 'ml-0'} flex-col items-center justify-center`}
+      className={`flex min-h-screen duration-500 ease-in-out ${isOpen ? 'ml-[270px]' : 'ml-0'} flex-col items-center justify-center`}
     >
       <div className="text-center text-gray-100">
-        <h1 className="mb-4 text-6xl font-bold">LegislAI</h1>
-        <h3 className="mb-4 text-2xl font-bold">
+        <h1 className="mb-4 text-5xl font-bold">LegislAI</h1>
+        <h3 className="mb-4 text-xl font-bold">
           A CONSTITUIÇÃO TAMBÉM PODE SER SIMPLES
         </h3>
-        <p className="mx-auto mb-12 w-[60%] text-lg">
+        <p className="mx-auto mb-12 w-[60%]">
           Navegar pela legislação portuguesa nunca foi tão fácil. O nosso
           chatbot está aqui para o ajudar a entender e a aplicar as leis
           portuguesas de forma rápida e eficiente.
         </p>
       </div>
-      <Card
+      {/* <Card
         title="Assistente Virtual"
         description="Tem dúvidas sobre legislação? Pergunte ao nosso chatbot!"
         image="/logo.png"
-        url="/"
-      />
+        url="/chat"
+      /> */}
     </div>
   );
 }

@@ -11,15 +11,15 @@ type SidebarButtonProps = {
 const SidebarButton = ({ icon, text, url }: SidebarButtonProps) => {
   return (
     <Link href={url}>
-      <div className="flex w-full flex-row items-center justify-start gap-2 rounded-md p-2 hover:bg-mine-shaft-700">
+      <div className="hover:bg-green-house-900 flex w-full flex-row items-center justify-start gap-2 rounded-md p-2">
         {typeof icon === 'string' ? (
-          <Image src={icon} alt="icon" width={24} height={24} />
+          <Image src={icon} alt="icon" width={22} height={22} />
         ) : isValidElement(icon) ? (
           icon
         ) : (
           <></>
         )}
-        <span>{text}</span>
+        <span className="text-sm">{text}</span>
       </div>
     </Link>
   );

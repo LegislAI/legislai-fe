@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
 import { Conversation } from '@/types';
-// import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 
 interface ConversationState {
   conversations: { [conversationId: string]: Conversation };
@@ -30,7 +30,7 @@ export const conversationSlice = createSlice({
         state.conversations[conversation.conversationId] = conversation;
       });
     },
-    addLocalMessage: (state, action: PayloadAction<AddMessagePayload>) => {
+    addMessage: (state, action: PayloadAction<AddMessagePayload>) => {
       const { conversationId, message } = action.payload;
       const messageId = state.conversations[conversationId].messages.length + 1;
 
@@ -43,26 +43,35 @@ export const conversationSlice = createSlice({
       });
       state.conversations[conversationId].updatedAt = new Date().toISOString();
       state.loading = true;
+    },
+    addMessageToNewConversation: (state, action: PayloadAction<string>) => {
+      const message = action.payload;
+      const id = uuidv4().toString();
 
-      // if (!conversationId || !state[conversationId]) {
-      //   const id = uuidv4().toString();
-      //   state[id].conversation = {
-      //     conversationId: id,
-      //     conversationName: 'New Conversation',
-      //     messages: [message],
-      //     createdAt: new Date().toISOString(),
-      //     updatedAt: new Date().toISOString(),
-      //   };
-      //   state[id].loading = true;
-      // } else {
-      //   state[conversationId].conversation.messages.push(message);
-      //   state[conversationId].conversation.updatedAt = new Date().toISOString();
-      //   state[conversationId].loading = true;
-      // }
+      state.conversations[id] = {
+        conversationId: id,
+        conversationName: 'Nova conversa',
+        conversationField: 'Direito Civil',
+        messages: [
+          {
+            messageId: '0',
+            message: message,
+            attachments: [],
+            sender: 'user',
+            createdAt: '',
+          },
+        ],
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      };
+      state.loading = true;
+
+      action.payload = id;
     },
   },
 });
 
-export const { addLocalMessage, loadConversations } = conversationSlice.actions;
+export const { loadConversations, addMessage, addMessageToNewConversation } =
+  conversationSlice.actions;
 
 export default conversationSlice.reducer;

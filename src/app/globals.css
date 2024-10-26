@@ -9,17 +9,17 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #3A3A3A;
+  background-color: #15270c;
   border-radius: 10px;
   transition: background-color 0.3s;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #333333;
+  background-color: transparent;
 }
 
 /* Firefox */
 .scrollable {
   scrollbar-width: thin;
-  scrollbar-color: #3A3A3A transparent;
+  scrollbar-color: #15270c transparent;
 }

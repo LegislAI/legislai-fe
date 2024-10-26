@@ -38,18 +38,21 @@ const ConversationInput = ({ onSendMessage }: ConversationInputProps) => {
   }, [inputValue]);
 
   return (
-    <div className="flex w-full gap-4">
+    <div className="relative flex w-full gap-4 rounded-2xl shadow-lg">
       <textarea
         ref={textareaRef}
-        className="w-full resize-none rounded-2xl bg-dark-light px-8 py-4 text-white opacity-50 shadow-lg outline-none"
+        className="bg-green-house-950 w-full resize-none rounded-2xl py-4 pl-6 pr-16 text-sm text-gray-200 placeholder-gray-200 outline-none placeholder:text-sm"
         rows={1}
         placeholder="Escreva uma mensagem..."
         value={inputValue}
         onChange={e => setInputValue(e.target.value)}
         onKeyDown={handleKeyDown}
       ></textarea>
-      <button onClick={handleSubmit}>
-        <IoSend className="text-3xl text-dark-light/90 hover:text-dark-medium" />
+      <button
+        className="absolute right-4 top-1/2 -translate-y-1/2"
+        onClick={handleSubmit}
+      >
+        <IoSend className="text-2xl text-gray-200 hover:text-gray-300" />
       </button>
     </div>
   );

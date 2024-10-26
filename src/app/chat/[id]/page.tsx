@@ -1,7 +1,7 @@
 'use client';
 
 import { useAppSelector, useAppDispatch } from '@/state/hooks';
-import { addLocalMessage } from '@/state/conversation/conversationSlice';
+import { addMessage } from '@/state/conversation/conversationSlice';
 
 import { useSidebarContext } from '@/components/Sidebar/sidebarContext';
 import ConversationMessages from '@/components/ConversationMessages';
@@ -21,7 +21,7 @@ export default function Chat({ params: { id } }: ChatParams) {
   const dispatch = useAppDispatch();
 
   const handleSendMessage = (messageText: string) => {
-    dispatch(addLocalMessage({ conversationId: id, message: messageText }));
+    dispatch(addMessage({ conversationId: id, message: messageText }));
   };
 
   return (
@@ -29,7 +29,7 @@ export default function Chat({ params: { id } }: ChatParams) {
       className={`flex h-screen max-h-screen overflow-y-auto duration-500 ease-in-out ${isOpen ? 'ml-[270px]' : 'ml-0'} flex-col items-center justify-end py-6`}
     >
       <div className="flex h-full w-[70%] flex-col items-center justify-between">
-        <div className="flex-grow overflow-y-auto">
+        <div className="w-full flex-grow overflow-y-auto">
           <ConversationMessages messages={messages} />
         </div>
 
