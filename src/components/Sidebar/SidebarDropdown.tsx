@@ -98,11 +98,7 @@ const SidebarDropdown = ({ icon, text, url }: SidebarDropdownProps) => {
   useEffect(() => {
     const conversationId = pathname.split('/').pop();
 
-    if (conversationId) {
-      changeActiveConversation(conversationId);
-    } else {
-      changeActiveConversation(undefined);
-    }
+    changeActiveConversation(conversationId || undefined);
   }, [changeActiveConversation, pathname]);
 
   const handleChangeName = (id: string) => {
