@@ -1,6 +1,8 @@
 'use client';
 
+import { usePathname } from 'next/navigation';
 import { useSidebarContext } from './sidebarContext';
+
 import {
   TbLayoutSidebarLeftCollapse,
   TbLayoutSidebarLeftExpand,
@@ -15,7 +17,17 @@ import SidebarButton from './SidebarButton';
 import SidebarDropdown from './SidebarDropdown';
 
 const SideBar = () => {
+  const pathname = usePathname();
   const { isOpen, toggleSidebar } = useSidebarContext();
+  const showSidebar =
+    pathname == '/' ||
+    pathname.startsWith('/chat') ||
+    pathname.startsWith('/definicoes') ||
+    pathname.startsWith('/sobre');
+
+  if (!showSidebar) {
+    return null;
+  }
 
   return (
     <>
@@ -52,7 +64,7 @@ const SideBar = () => {
               <SidebarButton
                 icon={<IoHomeOutline className="text-xl" />}
                 text="Página Inicial"
-                url="/"
+                url="/home"
               />
               <SidebarDropdown
                 icon="/avatar.svg"
@@ -66,12 +78,12 @@ const SideBar = () => {
             <SidebarButton
               icon={<IoSparklesOutline className="text-xl" />}
               text="Sobre"
-              url=""
+              url="/sobre"
             />
             <SidebarButton
               icon={<IoSettingsOutline className="text-xl" />}
               text="Definições"
-              url=""
+              url="/definicoes"
             />
           </div>
         </div>

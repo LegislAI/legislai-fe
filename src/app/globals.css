@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Scroll Bar */
+
 /* For WebKit-based browsers (Chrome, Safari) */
 ::-webkit-scrollbar {
   width: 8px;
@@ -22,4 +24,28 @@
 .scrollable {
   scrollbar-width: thin;
   scrollbar-color: #15270c transparent;
+}
+
+
+/* Flip Card */
+
+.flip-card {
+  perspective: 1000px;
+}
+
+.flip-card-inner {
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  position: relative;
+}
+
+.flip-card-front,
+.flip-card-back {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+}
+
+.flip-card-back {
+  transform: rotateY(180deg);
 }

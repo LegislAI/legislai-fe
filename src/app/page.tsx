@@ -3,17 +3,22 @@
 import { useEffect } from 'react';
 import { useAppDispatch } from '@/state/hooks';
 import { useSidebarContext } from '@/components/Sidebar/sidebarContext';
+import { useSession } from 'next-auth/react';
 
 import { loadConversations } from '@/state/conversation/conversationSlice';
 import { transformConversation } from '@/utils/transformer';
 
-// import Card from '@/components/Card';
-
 import data from '@/data/conversations.json';
+import { redirect } from 'next/navigation';
 
 export default function HomePage() {
+  const { data: session } = useSession();
   const { isOpen } = useSidebarContext();
   const dispatch = useAppDispatch();
+
+  if (!session) {
+    redirect('/login');
+  }
 
   useEffect(() => {
     const transformedConversations = data.map(conversations => {
