@@ -36,8 +36,6 @@ export const login = async ({ email, password }: LoginPayload) => {
       redirect: false,
     });
 
-    console.log('response:', response);
-
     if (response?.error) {
       throw new Error(response.error);
     }
@@ -57,16 +55,12 @@ export const logout = async () => {
 };
 
 export const getAllUsers = async (access_token: JWT) => {
-  console.log('authService - access_token:', access_token);
-
   try {
     const response = await AUTH_API.get('/users', {
       headers: {
         Authorization: `Bearer ${access_token}`,
       },
     });
-
-    console.log('response:', response);
 
     if (response.status === 200) {
       return response.data;

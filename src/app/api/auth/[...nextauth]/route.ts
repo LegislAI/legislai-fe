@@ -1,32 +1,19 @@
 import NextAuth, { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
+import { JWT } from 'next-auth/jwt';
 import { jwtDecode } from 'jwt-decode';
 import axios from 'axios';
 
 import { AUTH_API } from '@/lib/api';
-import { JWT } from 'next-auth/jwt';
-// import { redirect } from 'next/navigation';
+import { User } from '@/types';
 
-type User = {
-  user_id: number;
-  email: string;
-  role: string;
-  username: string;
-  access_token: string;
-  refresh_token: string;
-};
-
-declare module 'next-auth' {
-  interface Session {
-    accessToken?: string;
-  }
-}
+const REFRESH_AUTH_API = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_AUTH_API_BASE_URL,
+});
 
 const refreshTokens = async (token: JWT) => {
-  console.log('Refreshing tokens...');
-
   try {
-    const response = await AUTH_API.post(
+    const response = await REFRESH_AUTH_API.post(
       '/refresh-tokens',
       {
         email: token.email,
@@ -40,12 +27,11 @@ const refreshTokens = async (token: JWT) => {
     );
 
     if (response.status !== 200) {
-      console.log('Error during token refresh:', response);
+      console.error('Error during token refresh:', response);
       throw new Error('RefreshAccessTokenError');
     }
 
     const tokens = response.data;
-    console.log('New tokens:', tokens);
     const decodedToken = jwtDecode(tokens.access_token) as { exp: number };
     const accessTokenExpires = decodedToken?.exp ? decodedToken.exp * 1000 : 0;
 
@@ -99,21 +85,11 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     jwt: async ({ token, user }) => {
-      console.log('JWT Callback - Token', token);
+      // console.log('Debug: JWT Callback - Token', token);
 
-      if (token.accessToken) {
-        const decodedToken = jwtDecode(token.accessToken as string) as {
-          exp: number;
-        };
-        const accessTokenExpires = decodedToken?.exp
-          ? decodedToken.exp * 1000
-          : 0;
-        token.accessTokenExpires = accessTokenExpires;
-      }
-
-      // user only has value after login
+      // Situation 1: User just logged in
       if (user) {
-        console.log('user logged in');
+        // console.log('Debug: User logged in');
         const typedUser = user as unknown as User;
 
         return {
@@ -128,30 +104,47 @@ export const authOptions: NextAuthOptions = {
         };
       }
 
-      console.log(
-        'accessToken expires on:',
-        new Date(token.accessTokenExpires as number),
-      );
-
-      // Verify if token is valid
-      if (Date.now() < (token.accessTokenExpires as number)) {
-        console.log('Token is valid');
+      // Situation 2: Access token doesn't exist
+      if (!token.accessToken) {
+        // console.log('Debug: No token provided');
         return token;
       }
 
-      console.log('Token expired, refreshing...');
+      // Situation 3: Access token exists and needs to be checked
+      if (token.accessToken) {
+        const decodedToken = jwtDecode(token.accessToken as string) as {
+          exp: number;
+        };
+        const accessTokenExpires = decodedToken?.exp
+          ? decodedToken.exp * 1000
+          : 0;
+        token.accessTokenExpires = accessTokenExpires;
+      }
 
-      return refreshTokens(token);
+      // console.log(
+      //   'accessToken expires on:',
+      //   new Date(token.accessTokenExpires as number),
+      // );
+
+      // Situation 4: Access token is about to expire
+      const shouldRefreshTokens =
+        (token.accessTokenExpires as number) - 60000 < Date.now();
+
+      if (shouldRefreshTokens) {
+        // console.log('Debug: Access token is about to expire. Refreshing...');
+        return refreshTokens(token);
+      }
+
+      // Situation 5: Access token is still valid
+      // console.log('Debug: Access token is still valid');
+      return token;
     },
     session: async ({ session, token }) => {
-      console.log('Session Callback - Token', token);
-
-      // if (token.error === 'RefreshAccessTokenError') {
-      //   redirect('/login');
-      // }
+      // console.log('Debug: Session Callback - Token', token);
 
       if (token) {
         session.accessToken = token.accessToken as string;
+        session.refreshToken = token.refreshToken as string;
         session.expires = String(token.accessTokenExpires);
         session.user = token.user as User;
       }

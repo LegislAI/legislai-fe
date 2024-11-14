@@ -1,13 +1,15 @@
-// declare module 'next-auth' {
-//   interface User {
-//     accessToken: string;
-//     refreshToken: string;
-//     role: string;
-//     username: string;
-//   }
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import NextAuth from 'next-auth';
 
-//   interface Session {
-//     user: User;
-//     accessToken: string;
-//   }
-// }
+declare module 'next-auth' {
+  interface Session {
+    accessToken?: string;
+  }
+
+  interface Session {
+    accessToken?: string;
+    refreshToken?: string;
+    user: User;
+    expires: string;
+  }
+}
