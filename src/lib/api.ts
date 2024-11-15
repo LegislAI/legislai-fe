@@ -22,7 +22,6 @@ export const AUTH_API = axios.create({
   baseURL: process.env.NEXT_PUBLIC_AUTH_API_BASE_URL,
 });
 
-// Interceptor to add the access token to the request
 AUTH_API.interceptors.request.use(
   async (config: InternalAxiosRequestConfig) => {
     const session = await getSession();

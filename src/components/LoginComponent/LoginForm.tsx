@@ -60,7 +60,7 @@ const LoginForm = () => {
             className="w-full rounded-md bg-light-green-50 px-3 py-2 text-sm text-main-green-700 placeholder-main-green-700 focus:outline-none focus:ring-2 focus:ring-main-green-500"
           />
           {errors.email && (
-            <span className="mt-1 text-xxs font-medium text-red-800">
+            <span className="text-xxs text-red-600">
               {errors.email.message}
             </span>
           )}
@@ -74,7 +74,7 @@ const LoginForm = () => {
             className="w-full rounded-md bg-light-green-50 px-3 py-2 text-sm text-main-green-700 placeholder-main-green-700 focus:outline-none focus:ring-2 focus:ring-main-green-500"
           />
           {errors.password && (
-            <span className="mt-1 text-xxs font-medium text-red-800">
+            <span className="text-xxs text-red-600">
               {errors.password.message}
             </span>
           )}
