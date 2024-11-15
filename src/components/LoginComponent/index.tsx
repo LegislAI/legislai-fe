@@ -8,7 +8,10 @@ interface LoginComponentProps {
 
 const LoginComponent = ({ handleFlipCard }: LoginComponentProps) => {
   return (
-    <div className="flex min-h-[380px] w-full flex-col items-center justify-between rounded-xl bg-gradient-to-tr from-main-green-500 to-main-green-700 p-6 shadow-lg">
+    <div className="flex max-h-[400px] min-h-[360px] w-full flex-col items-center justify-between rounded-xl bg-gradient-to-tr from-main-green-500 to-main-green-700 p-6 shadow-lg">
+      {/* <span className="mb-4 text-2xl font-bold text-light-green-50">
+        Iniciar Sessão
+      </span> */}
       <div className="flex w-full flex-grow flex-col items-center justify-center gap-3">
         <button className="flex w-full items-center justify-center gap-2 rounded-md bg-light-green-50 p-3 shadow-md transition duration-200 hover:bg-light-green-100">
           <Image

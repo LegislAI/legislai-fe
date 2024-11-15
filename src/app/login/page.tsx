@@ -17,10 +17,6 @@ export default function LoginPage() {
     if (!isAnimating) {
       setIsAnimating(true);
       setIsFlipped(!isFlipped);
-
-      // setTimeout(() => {
-      //   setIsAnimating(false);
-      // }, 1000);
     }
   };
 
@@ -34,7 +30,7 @@ export default function LoginPage() {
           </h3>
         </div>
 
-        <div className="flip-card min-h-[380px] w-[400px]">
+        <div className="flip-card min-h-[360px] w-[400px]">
           <motion.div
             className="flip-card-inner h-full w-full"
             initial={false}
