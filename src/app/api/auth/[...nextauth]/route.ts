@@ -6,6 +6,7 @@ import axios from 'axios';
 
 import { AUTH_API } from '@/lib/api';
 import { User } from '@/types';
+import { redirect } from 'next/navigation';
 
 const REFRESH_AUTH_API = axios.create({
   baseURL: process.env.NEXT_PUBLIC_AUTH_API_BASE_URL,
@@ -27,7 +28,6 @@ const refreshTokens = async (token: JWT) => {
     );
 
     if (response.status !== 200) {
-      console.error('Error during token refresh:', response);
       throw new Error('RefreshAccessTokenError');
     }
 
@@ -126,10 +126,10 @@ export const authOptions: NextAuthOptions = {
       //   new Date(token.accessTokenExpires as number),
       // );
 
-      // Situation 4: Access token is about to expire
       const shouldRefreshTokens =
-        (token.accessTokenExpires as number) - 60000 < Date.now();
+        (token.accessTokenExpires as number) < Date.now();
 
+      // Situation 4: Access token is about to expire
       if (shouldRefreshTokens) {
         // console.log('Debug: Access token is about to expire. Refreshing...');
         return refreshTokens(token);
@@ -141,6 +141,11 @@ export const authOptions: NextAuthOptions = {
     },
     session: async ({ session, token }) => {
       // console.log('Debug: Session Callback - Token', token);
+
+      if (token?.error === 'RefreshAccessTokenError') {
+        console.error('Error during token refresh. Logging out...');
+        redirect('/login');
+      }
 
       if (token) {
         session.accessToken = token.accessToken as string;

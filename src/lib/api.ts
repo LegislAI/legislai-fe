@@ -80,6 +80,10 @@ AUTH_API.interceptors.response.use(
           },
         );
 
+        if (response.status !== 200) {
+          throw new Error('Error during token refresh');
+        }
+
         const tokens = response.data;
         const decodedToken = tokens.access_token;
         const accessTokenExpires = decodedToken?.exp
