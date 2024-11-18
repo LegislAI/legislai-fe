@@ -9,18 +9,9 @@ import { toast } from 'react-toastify';
 
 import { login } from '@/services/authService';
 import { LoginPayload } from '@/types';
+import { LoginSchema } from '@/types/schemas';
 
-const schema = z.object({
-  email: z.string().email({ message: 'Introduza um email válido.' }),
-  password: z
-    .string()
-    .min(8, { message: 'Tem de conter pelo menos 8 caracteres.' })
-    .regex(/[a-zA-Z]/, { message: 'Tem de conter pelo menos uma letra.' })
-    .regex(/[0-9]/, { message: 'Tem de conter pelo menos um número.' })
-    .trim(),
-});
-
-type FormFields = z.infer<typeof schema>;
+type FormFields = z.infer<typeof LoginSchema>;
 
 const LoginForm = () => {
   const router = useRouter();
@@ -29,7 +20,7 @@ const LoginForm = () => {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<FormFields>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(LoginSchema),
   });
 
   const onSubmit: SubmitHandler<FormFields> = async data => {

@@ -14,10 +14,11 @@ const REFRESH_AUTH_API = axios.create({
 
 const refreshTokens = async (token: JWT) => {
   try {
+    console.log('email:', (token.user as User).email);
     const response = await REFRESH_AUTH_API.post(
       '/refresh-tokens',
       {
-        email: token.email,
+        email: (token.user as User).email,
         access_token: token.accessToken, // old access token to revoke
       },
       {
@@ -85,11 +86,11 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     jwt: async ({ token, user }) => {
-      // console.log('Debug: JWT Callback - Token', token);
+      console.log('Debug: JWT Callback - Token', token);
 
       // Situation 1: User just logged in
       if (user) {
-        // console.log('Debug: User logged in');
+        console.log('Debug: User logged in');
         const typedUser = user as unknown as User;
 
         return {
@@ -97,7 +98,7 @@ export const authOptions: NextAuthOptions = {
           accessToken: typedUser.access_token,
           refreshToken: typedUser.refresh_token,
           user: {
-            id: typedUser.user_id,
+            user_id: typedUser.user_id,
             email: typedUser.email,
             username: typedUser.username,
           },
@@ -106,7 +107,7 @@ export const authOptions: NextAuthOptions = {
 
       // Situation 2: Access token doesn't exist
       if (!token.accessToken) {
-        // console.log('Debug: No token provided');
+        console.log('Debug: No token provided');
         return token;
       }
 
@@ -121,26 +122,26 @@ export const authOptions: NextAuthOptions = {
         token.accessTokenExpires = accessTokenExpires;
       }
 
-      // console.log(
-      //   'accessToken expires on:',
-      //   new Date(token.accessTokenExpires as number),
-      // );
+      console.log(
+        'accessToken expires on:',
+        new Date(token.accessTokenExpires as number),
+      );
 
       const shouldRefreshTokens =
         (token.accessTokenExpires as number) < Date.now();
 
       // Situation 4: Access token is about to expire
       if (shouldRefreshTokens) {
-        // console.log('Debug: Access token is about to expire. Refreshing...');
+        console.log('Debug: Access token is about to expire. Refreshing...');
         return refreshTokens(token);
       }
 
       // Situation 5: Access token is still valid
-      // console.log('Debug: Access token is still valid');
+      console.log('Debug: Access token is still valid');
       return token;
     },
     session: async ({ session, token }) => {
-      // console.log('Debug: Session Callback - Token', token);
+      console.log('Debug: Session Callback - Token', token);
 
       if (token?.error === 'RefreshAccessTokenError') {
         console.error('Error during token refresh. Logging out...');

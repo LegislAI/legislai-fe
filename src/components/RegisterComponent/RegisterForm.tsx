@@ -7,39 +7,22 @@ import { toast } from 'react-toastify';
 
 import { register as registerUser } from '@/services/authService';
 import { RegisterPayload } from '@/types';
+import { RegisterSchema } from '@/types/schemas';
 
-const schema = z.object({
-  username: z
-    .string()
-    .min(3, { message: 'Tem de conter pelo menos 3 caracteres.' }),
-  email: z.string().email({ message: 'Introduza um email válido.' }),
-  password: z
-    .string()
-    .min(8, { message: 'Tem de conter pelo menos 8 caracteres.' })
-    .regex(/[a-zA-Z]/, { message: 'Tem de conter pelo menos uma letra.' })
-    .regex(/[0-9]/, { message: 'Tem de conter pelo menos um número.' })
-    .trim(),
-  // confirmPassword: z.string().trim(),
-});
-// .superRefine(({ password, confirmPassword }, ctx) => {
-//   if (password && confirmPassword && password !== confirmPassword) {
-//     ctx.addIssue({
-//       code: z.ZodIssueCode.custom,
-//       message: 'As passwords não coincidem.',
-//       path: ['confirmPassword'],
-//     });
-//   }
-// });
+type FormFields = z.infer<typeof RegisterSchema>;
 
-type FormFields = z.infer<typeof schema>;
+interface RegisterFormProps {
+  handleFlipCard: () => void;
+}
 
-const RegisterForm = () => {
+const RegisterForm = ({ handleFlipCard }: RegisterFormProps) => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm<FormFields>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(RegisterSchema),
   });
 
   const onSubmit: SubmitHandler<FormFields> = async data => {
@@ -51,6 +34,10 @@ const RegisterForm = () => {
       };
 
       await registerUser(payload);
+      toast.success('Utilizador registado com sucesso.');
+
+      reset();
+      handleFlipCard();
     } catch (error) {
       toast.error((error as Error).message);
     }
@@ -61,9 +48,8 @@ const RegisterForm = () => {
       onSubmit={handleSubmit(onSubmit)}
       className="flex w-full flex-grow flex-col items-center justify-around gap-3"
     >
-      <div className="flex w-full flex-grow flex-col justify-around gap-1">
+      <div className="flex w-full flex-grow flex-col gap-2">
         <div>
-          {/* <p className="mb-1 text-sm text-light-green-50">Nome de Utilizador</p> */}
           <input
             {...register('username')}
             type="text"
@@ -76,8 +62,8 @@ const RegisterForm = () => {
             </span>
           )}
         </div>
+
         <div>
-          {/* <p className="mb-1 text-sm text-light-green-50">Email</p> */}
           <input
             {...register('email')}
             type="email"
@@ -90,8 +76,8 @@ const RegisterForm = () => {
             </span>
           )}
         </div>
+
         <div>
-          {/* <p className="mb-1 text-sm text-light-green-50">Palavra-passe</p> */}
           <input
             {...register('password')}
             type="password"

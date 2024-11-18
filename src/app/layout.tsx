@@ -2,15 +2,16 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { raleway } from '@/utils/fonts';
 
+import { getServerSession } from 'next-auth';
+import { authOptions } from './api/auth/[...nextauth]/route';
+
 import StoreProvider from './StoreProvider';
 import { SidebarProvider } from '@/components/Sidebar/sidebarContext';
 import ClientSessionProvider from '@/components/ClientSessionProvider';
 import SideBar from '@/components/Sidebar';
 import ToastComponent from '@/components/ToastComponent';
 import 'react-toastify/dist/ReactToastify.css';
-
-import { getServerSession } from 'next-auth';
-import { authOptions } from './api/auth/[...nextauth]/route';
+// import AutoSessionRefresh from '@/components/AutoSessionRefresh';
 
 export const metadata: Metadata = {
   title: 'LegislAI',
@@ -31,6 +32,7 @@ export default async function RootLayout({
       >
         <ClientSessionProvider session={session}>
           <StoreProvider>
+            {/* <AutoSessionRefresh /> */}
             <ToastComponent />
             <SidebarProvider>
               <SideBar />
