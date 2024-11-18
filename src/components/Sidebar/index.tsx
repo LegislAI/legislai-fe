@@ -1,31 +1,28 @@
 'use client';
 
+import { useSession } from 'next-auth/react';
 import { usePathname } from 'next/navigation';
 import { useSidebarContext } from './sidebarContext';
+
+import SidebarButton from './SidebarButton';
+import SidebarDropdown from './SidebarDropdown';
+import UserPanel from './UserPanel';
+
+import { PUBLIC_ROUTES } from '@/lib/routes';
 
 import {
   TbLayoutSidebarLeftCollapse,
   TbLayoutSidebarLeftExpand,
 } from 'react-icons/tb';
-import {
-  IoHomeOutline,
-  IoSettingsOutline,
-  IoSparklesOutline,
-} from 'react-icons/io5';
-
-import SidebarButton from './SidebarButton';
-import SidebarDropdown from './SidebarDropdown';
+import { IoHomeOutline } from 'react-icons/io5';
 
 const SideBar = () => {
+  const { data: session } = useSession();
   const pathname = usePathname();
   const { isOpen, toggleSidebar } = useSidebarContext();
-  const showSidebar =
-    pathname == '/' ||
-    pathname.startsWith('/chat') ||
-    pathname.startsWith('/definicoes') ||
-    pathname.startsWith('/sobre');
+  const isPublicRoute = PUBLIC_ROUTES.some(route => pathname.startsWith(route));
 
-  if (!showSidebar) {
+  if (isPublicRoute) {
     return null;
   }
 
@@ -64,7 +61,7 @@ const SideBar = () => {
               <SidebarButton
                 icon={<IoHomeOutline className="text-xl" />}
                 text="Página Inicial"
-                url="/home"
+                url="/"
               />
               <SidebarDropdown
                 icon="/avatar.svg"
@@ -74,18 +71,7 @@ const SideBar = () => {
             </div>
           </div>
 
-          <div className="mb-4">
-            <SidebarButton
-              icon={<IoSparklesOutline className="text-xl" />}
-              text="Sobre"
-              url="/sobre"
-            />
-            <SidebarButton
-              icon={<IoSettingsOutline className="text-xl" />}
-              text="Definições"
-              url="/definicoes"
-            />
-          </div>
+          <UserPanel session={session} />
         </div>
       </div>
     </>

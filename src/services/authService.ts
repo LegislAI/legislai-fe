@@ -16,7 +16,7 @@ export const register = async ({
       password,
     });
 
-    if (response.status === 201) {
+    if (response.status === 200) {
       return response;
     } else if (response.status === 403) {
       throw new Error(`O email ${email} já está registado.`);
@@ -48,7 +48,7 @@ export const login = async ({ email, password }: LoginPayload) => {
 
 export const logout = async () => {
   try {
-    await signOut({ redirect: false });
+    await signOut({ redirect: true });
   } catch (error) {
     throw error;
   }

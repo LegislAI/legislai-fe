@@ -11,7 +11,7 @@ const RegisterComponent = ({ handleFlipCard }: RegisterComponentProps) => {
         Registe-se
       </span>
 
-      <RegisterForm />
+      <RegisterForm handleFlipCard={handleFlipCard} />
 
       <div className="flex w-full flex-col">
         <div className="my-5 w-full border-t border-light-green-50"></div>
