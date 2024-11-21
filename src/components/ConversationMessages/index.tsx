@@ -45,7 +45,7 @@ const ConversationMessages = ({ messages }: ChatProps) => {
 
             {message.sender === 'user' ? (
               <div className="chat chat-end w-full max-w-[80%]">
-                <div className="chat-bubble bg-green-house-700 px-4 py-2">
+                <div className="chat-bubble bg-deep-sea-800 px-4 py-2">
                   <span className="whitespace-pre-wrap break-words text-sm text-gray-200">
                     {message.message}
                   </span>

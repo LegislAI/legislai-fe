@@ -2,6 +2,8 @@
 
 import { useSession } from 'next-auth/react';
 import { usePathname } from 'next/navigation';
+import Image from 'next/image';
+
 import { useSidebarContext } from './sidebarContext';
 
 import SidebarButton from './SidebarButton';
@@ -30,7 +32,7 @@ const SideBar = () => {
     <>
       <button
         onClick={toggleSidebar}
-        className={`fixed left-4 top-4 z-50 text-white transition-transform duration-500 ${
+        className={`fixed left-4 top-4 z-50 transition-transform duration-500 ${
           isOpen ? 'hidden' : 'block'
         }`}
       >
@@ -38,7 +40,7 @@ const SideBar = () => {
       </button>
 
       <div
-        className={`fixed left-0 top-0 h-screen w-[270px] bg-green-house-950 transition-transform duration-500 ease-in-out ${
+        className={`fixed left-0 top-0 h-screen w-[270px] bg-deep-sea-900 transition-transform duration-500 ease-in-out ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
         style={{
@@ -47,17 +49,22 @@ const SideBar = () => {
       >
         <button
           onClick={toggleSidebar}
-          className="absolute left-4 top-4 z-50 text-white transition-transform duration-500"
+          className="absolute left-4 top-4 z-50 transition-transform duration-500"
         >
           <TbLayoutSidebarLeftCollapse className="h-8 w-8 text-gray-100" />
         </button>
 
         <div className="flex h-full w-full flex-col justify-between px-4 text-gray-100">
           <div>
-            <h1 className="mb-6 mt-12 text-center text-3xl font-bold">
-              LegislAI
-            </h1>
-            <div className="flex w-full flex-col gap-1">
+            <div className="mt-16 flex w-full justify-center">
+              <Image
+                src="/legislai-logo-fff.svg"
+                alt="legislau-logo"
+                width={160}
+                height={50}
+              />
+            </div>
+            <div className="mt-6 flex w-full flex-col gap-1">
               <SidebarButton
                 icon={<IoHomeOutline className="text-xl" />}
                 text="Página Inicial"

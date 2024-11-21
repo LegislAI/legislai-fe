@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { raleway } from '@/utils/fonts';
 
 import { getServerSession } from 'next-auth';
-import { authOptions } from './api/auth/[...nextauth]/route';
+import { authOptions } from '@/lib/auth';
 
 import StoreProvider from './StoreProvider';
 import { SidebarProvider } from '@/components/Sidebar/sidebarContext';
@@ -11,7 +11,6 @@ import ClientSessionProvider from '@/components/ClientSessionProvider';
 import SideBar from '@/components/Sidebar';
 import ToastComponent from '@/components/ToastComponent';
 import 'react-toastify/dist/ReactToastify.css';
-// import AutoSessionRefresh from '@/components/AutoSessionRefresh';
 
 export const metadata: Metadata = {
   title: 'LegislAI',
@@ -27,12 +26,9 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body
-        className={`bg-gradient-to-tr from-green-house-800 to-green-house-950 text-stone-900 ${raleway.className} tracking-wide`}
-      >
+      <body className={`bg-background ${raleway.className} tracking-wide`}>
         <ClientSessionProvider session={session}>
           <StoreProvider>
-            {/* <AutoSessionRefresh /> */}
             <ToastComponent />
             <SidebarProvider>
               <SideBar />

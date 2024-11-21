@@ -1,13 +1,18 @@
 'use client';
 
 import { useEffect } from 'react';
+// import Image from 'next/image';
+
 import { useAppDispatch } from '@/state/hooks';
 import { useSidebarContext } from '@/components/Sidebar/sidebarContext';
 
 import { loadConversations } from '@/state/conversation/conversationSlice';
 import { transformConversation } from '@/utils/transformer';
 
+// import TypewriterEffect from '@/components/TypewriterEffect';
+
 import data from '@/data/conversations.json';
+// import { CatchPhrases } from '@/data/phrases';
 
 export default function HomePage() {
   const { isOpen } = useSidebarContext();
@@ -36,23 +41,27 @@ export default function HomePage() {
     <div
       className={`flex min-h-screen duration-500 ease-in-out ${isOpen ? 'ml-[270px]' : 'ml-0'} flex-col items-center justify-center`}
     >
-      <div className="text-center text-gray-100">
-        <h1 className="mb-4 text-5xl font-bold">LegislAI</h1>
-        <h3 className="mb-4 text-xl font-bold">
-          A CONSTITUIÇÃO TAMBÉM PODE SER SIMPLES
-        </h3>
-        <p className="mx-auto mb-12 w-[60%]">
+      <div className="flex w-full flex-col items-center justify-center gap-4 text-gray-100">
+        {/* <Image
+          src="/legislai-logo-fff.svg"
+          alt="legislau-logo"
+          width={250}
+          height={50}
+        /> */}
+
+        {/* <TypewriterEffect
+          phrases={CatchPhrases}
+          typingSpeed={100}
+          deleteSpeed={50}
+          pauseTime={2000}
+        /> */}
+
+        {/* <p className="mx-auto mt-10 w-3/4 text-center text-lg">
           Navegar pela legislação portuguesa nunca foi tão fácil. O nosso
           chatbot está aqui para o ajudar a entender e a aplicar as leis
           portuguesas de forma rápida e eficiente.
-        </p>
+        </p> */}
       </div>
-      {/* <Card
-        title="Assistente Virtual"
-        description="Tem dúvidas sobre legislação? Pergunte ao nosso chatbot!"
-        image="/logo.png"
-        url="/chat"
-      /> */}
     </div>
   );
 }
