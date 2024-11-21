@@ -4,11 +4,11 @@ import { useEffect, useRef, useState } from 'react';
 
 import { IoSend } from 'react-icons/io5';
 
-type ConversationInputProps = {
+type MessageInputProps = {
   onSendMessage: (message: string) => void;
 };
 
-const ConversationInput = ({ onSendMessage }: ConversationInputProps) => {
+const MessageInput = ({ onSendMessage }: MessageInputProps) => {
   const [inputValue, setInputValue] = useState('');
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -41,7 +41,7 @@ const ConversationInput = ({ onSendMessage }: ConversationInputProps) => {
     <div className="relative flex w-full gap-4 rounded-2xl shadow-lg">
       <textarea
         ref={textareaRef}
-        className="w-full resize-none rounded-2xl bg-green-house-950 py-4 pl-6 pr-16 text-sm text-gray-200 placeholder-gray-200 outline-none placeholder:text-sm"
+        className="w-full resize-none rounded-2xl bg-deep-sea-900 py-4 pl-6 pr-16 text-sm text-gray-200 placeholder-gray-300 outline-none placeholder:text-sm"
         rows={1}
         placeholder="Escreva uma mensagem..."
         value={inputValue}
@@ -52,10 +52,12 @@ const ConversationInput = ({ onSendMessage }: ConversationInputProps) => {
         className="absolute right-4 top-1/2 -translate-y-1/2"
         onClick={handleSubmit}
       >
-        <IoSend className="text-2xl text-gray-200 hover:text-gray-300" />
+        <IoSend
+          className={`text-2xl ${inputValue ? 'text-gray-200' : 'cursor-default text-gray-300'} hover:text-gray-400`}
+        />
       </button>
     </div>
   );
 };
 
-export default ConversationInput;
+export default MessageInput;

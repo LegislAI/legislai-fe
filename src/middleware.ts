@@ -55,10 +55,6 @@ export async function middleware(request: NextRequest) {
   }
 }
 
-// export const config = {
-//   matcher: ['/((?!.+\\.[\\w]+$|_next).*)', '/', '/(api|trpc)(.*)'],
-// };
-
 export const config = {
   matcher: ['/((?!api|_next|public|.*\\.[\\w]+$).*)'],
 };

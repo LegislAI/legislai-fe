@@ -1,17 +1,26 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 
+import FAQ from '@/views/FAQ';
+import PricingSection from '@/views/PricingSection';
+
 import LoginComponent from '@/components/LoginComponent';
 import RegisterComponent from '@/components/RegisterComponent';
+import TypewriterEffect from '@/components/TypewriterEffect';
+// import PricingCard from '@/components/PricingCard';
 
 import { FaAnglesDown } from 'react-icons/fa6';
+
+import { CatchPhrases } from '@/data/phrases';
 
 export default function LoginPage() {
   const [isFlipped, setIsFlipped] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
+  const pricingSectionRef = useRef<HTMLDivElement>(null);
+  const FAQSectionRef = useRef<HTMLDivElement>(null);
 
   const handleFlip = () => {
     if (!isAnimating) {
@@ -20,42 +29,70 @@ export default function LoginPage() {
     }
   };
 
+  const handleScrollToPricing = () => {
+    pricingSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handleScrollToQuestions = () => {
+    FAQSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
-    <div className="flex min-h-screen w-screen items-center justify-center">
-      <div className="flex w-[55%] flex-col items-center justify-center gap-6">
-        <div className="flex flex-col items-center justify-center gap-4">
-          <Image src="/logo.svg" alt="legislau-logo" width={250} height={50} />
-          <h3 className="mb-4 text-xl font-bold text-white">
-            A CONSTITUIÇÃO TAMBÉM PODE SER SIMPLES
-          </h3>
+    <div className="flex flex-col">
+      <div className="flex min-h-screen items-center justify-center">
+        <div className="flex w-[60%] flex-col items-center justify-center gap-10">
+          <div className="flex flex-col items-center justify-center gap-4">
+            <Image
+              src="/legislai-logo-fff.svg"
+              alt="legislau-logo"
+              width={250}
+              height={50}
+            />
+            <TypewriterEffect
+              phrases={CatchPhrases}
+              typingSpeed={100}
+              deleteSpeed={50}
+              pauseTime={2000}
+            />
+          </div>
+
+          <div className="flip-card min-h-[360px] w-[400px]">
+            <motion.div
+              className="flip-card-inner h-full w-full"
+              initial={false}
+              animate={{ rotateY: isFlipped ? 180 : 0 }}
+              transition={{ duration: 0.6 }}
+              onAnimationComplete={() => setIsAnimating(false)}
+            >
+              <motion.div className="flip-card-front">
+                <LoginComponent handleFlipCard={handleFlip} />
+              </motion.div>
+
+              <motion.div className="flip-card-back">
+                <RegisterComponent handleFlipCard={handleFlip} />
+              </motion.div>
+            </motion.div>
+          </div>
         </div>
 
-        <div className="flip-card min-h-[360px] w-[400px]">
-          <motion.div
-            className="flip-card-inner h-full w-full"
-            initial={false}
-            animate={{ rotateY: isFlipped ? 180 : 0 }}
-            transition={{ duration: 0.6 }}
-            onAnimationComplete={() => setIsAnimating(false)}
-          >
-            <motion.div className="flip-card-front">
-              <LoginComponent handleFlipCard={handleFlip} />
-            </motion.div>
+        <button
+          onClick={handleScrollToPricing}
+          className="absolute bottom-8 p-2 hover:animate-bounce"
+        >
+          <FaAnglesDown className="text-3xl text-light-text" />
+        </button>
 
-            <motion.div className="flip-card-back">
-              <RegisterComponent handleFlipCard={handleFlip} />
-            </motion.div>
-          </motion.div>
+        <div className="flex h-screen w-[40%] p-3">
+          <div className="h-full w-full rounded-lg bg-deep-sea-700 shadow-lg"></div>
         </div>
       </div>
 
-      <button className="absolute bottom-8 p-2 hover:animate-bounce">
-        <FaAnglesDown className="text-3xl text-white" />
-      </button>
+      <PricingSection
+        pricingSectionRef={pricingSectionRef}
+        handleScrollToQuestions={handleScrollToQuestions}
+      />
 
-      <div className="flex h-screen w-[45%] p-2">
-        <div className="h-full w-full rounded-lg bg-gradient-to-tr from-main-green-500 to-main-green-700 shadow-lg"></div>
-      </div>
+      <FAQ FAQSectionRef={FAQSectionRef} />
     </div>
   );
 }

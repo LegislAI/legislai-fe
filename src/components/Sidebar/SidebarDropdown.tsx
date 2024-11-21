@@ -111,7 +111,7 @@ const SidebarDropdown = ({ icon, text, url }: SidebarDropdownProps) => {
 
   return (
     <>
-      <div className="flex w-full flex-row items-center justify-between rounded-md p-2 hover:bg-green-house-900">
+      <div className="flex w-full flex-row items-center justify-between rounded-md p-2 hover:bg-deep-sea-800">
         <Link href={url}>
           <div className="flex w-full flex-row items-center gap-2">
             {typeof icon === 'string' ? (
@@ -121,17 +121,17 @@ const SidebarDropdown = ({ icon, text, url }: SidebarDropdownProps) => {
             ) : (
               <></>
             )}
-            <span className="text-sm">{text}</span>
+            <span className="text-sm text-gray-100">{text}</span>
           </div>
         </Link>
 
         {isHistoryOpen ? (
           <button onClick={toggleHistoryOpen}>
-            <IoCaretUp className="rounded-md text-xl text-gray-100 hover:bg-green-house-800" />
+            <IoCaretUp className="rounded-md text-xl text-gray-100" />
           </button>
         ) : (
           <button onClick={toggleHistoryOpen}>
-            <IoCaretDown className="rounded-md text-xl text-gray-100 hover:bg-green-house-800" />
+            <IoCaretDown className="rounded-md text-xl text-gray-100" />
           </button>
         )}
       </div>
@@ -144,7 +144,7 @@ const SidebarDropdown = ({ icon, text, url }: SidebarDropdownProps) => {
               href={`/chat/${conversation.conversation_id}`}
             >
               <div
-                className={`group relative flex w-full flex-row items-center justify-between rounded-md px-2 py-1 hover:bg-green-house-900 ${openMenuId === conversation.conversation_id || activeConversation == conversation.conversation_id ? 'bg-green-house-900' : ''}`}
+                className={`group relative flex w-full flex-row items-center justify-between rounded-md px-2 py-1 hover:bg-deep-sea-800 ${openMenuId === conversation.conversation_id || activeConversation == conversation.conversation_id ? 'bg-deep-sea-800' : ''}`}
                 data-tooltip-id={`tooltip-${conversation.conversation_id}`}
                 data-tooltip-content={conversation.conversation_name}
                 data-tooltip-delay-show={1000}
@@ -164,20 +164,20 @@ const SidebarDropdown = ({ icon, text, url }: SidebarDropdownProps) => {
                     e.preventDefault();
                     toggleMenu(conversation.conversation_id);
                   }}
-                  className="absolute right-1 rounded-md p-2 opacity-0 group-hover:bg-green-house-900 group-hover:opacity-100"
+                  className="absolute right-1 rounded-md p-2 opacity-0 group-hover:bg-deep-sea-800 group-hover:opacity-100"
                 >
                   <IoEllipsisHorizontalSharp className="text-lg text-gray-100 opacity-40 hover:opacity-100" />
                 </button>
                 {openMenuId === conversation.conversation_id && (
                   <div
                     ref={menuRef}
-                    className="absolute right-0 top-full z-50 rounded-xl bg-green-house-800 p-1 shadow-lg"
+                    className="absolute right-0 top-full z-50 rounded-xl bg-deep-sea-700 p-1 shadow-lg"
                   >
                     <button
                       onClick={() =>
                         handleChangeName(conversation.conversation_id)
                       }
-                      className="flex w-full items-center gap-2 p-2 hover:rounded-xl hover:bg-green-house-700"
+                      className="flex w-full items-center gap-2 p-2 hover:rounded-xl hover:bg-deep-sea-600"
                     >
                       <CiEdit className="text-lg text-gray-100" />
                       <span className="text-xs">Editar nome</span>
@@ -187,7 +187,7 @@ const SidebarDropdown = ({ icon, text, url }: SidebarDropdownProps) => {
                       onClick={() =>
                         handleRemoveConversation(conversation.conversation_id)
                       }
-                      className="flex w-full items-center gap-2 p-2 hover:rounded-xl hover:bg-green-house-700"
+                      className="flex w-full items-center gap-2 p-2 hover:rounded-xl hover:bg-deep-sea-600"
                     >
                       <IoTrashOutline className="text-lg text-gray-100" />
                       <span className="text-xs">Remover</span>

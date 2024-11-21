@@ -1,5 +1,4 @@
 import { signIn, signOut } from 'next-auth/react';
-import { JWT } from 'next-auth/jwt';
 
 import { AUTH_API } from '@/lib/api';
 import { RegisterPayload, LoginPayload } from '@/types';
@@ -49,24 +48,6 @@ export const login = async ({ email, password }: LoginPayload) => {
 export const logout = async () => {
   try {
     await signOut({ redirect: true });
-  } catch (error) {
-    throw error;
-  }
-};
-
-export const getAllUsers = async (access_token: JWT) => {
-  try {
-    const response = await AUTH_API.get('/users', {
-      headers: {
-        Authorization: `Bearer ${access_token}`,
-      },
-    });
-
-    if (response.status === 200) {
-      return response.data;
-    }
-
-    return null;
   } catch (error) {
     throw error;
   }

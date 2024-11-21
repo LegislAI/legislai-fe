@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "question": "O que é o LegislAI?",
+    "answer": "O LegislAI é um assistente virtual que o ajudará a navegar pela legislação portuguesa de forma prática, rápida e eficiente. Com ele, poderá esclarecer dúvidas sobre a legislação, procurar por leis específicas e aceder a várias outras funcionalidades. Todas as respostas procuram ser o mais claras e objetivas possível, mantendo a precisão e rigor necessários."
+  },
+  {
+    "id": 2,
+    "question": "A quem se destina o LegislAI?",
+    "answer": "O LegislAI destina-se a todos os cidadãos que pretendam aceder à legislação portuguesa de forma rápida e eficiente. Seja para estudantes, advogados, juristas, ou qualquer outra pessoa que necessite de consultar a legislação, o LegislAI está disponível para ajudar."
+  },
+  {
+    "id": 3,
+    "question": "As informações estão sempre atualizadas?",
+    "answer": "O LegislAI procura manter as informações diariamente atualizadas."
+  },
+  {
+    "id": 4,
+    "question": "Como posso garantir a privacidade dos meus dados?",
+    "answer": "Levamos a sua privacidade muito a sério. O LegislAI apenas recolhe os dados estritamente necessários para o seu funcionamento. Pode consultar a nossa Política de Privacidade para mais informações."
+  }
+]

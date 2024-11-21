@@ -46,7 +46,7 @@ const RegisterForm = ({ handleFlipCard }: RegisterFormProps) => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex w-full flex-grow flex-col items-center justify-around gap-3"
+      className="flex w-full flex-col gap-2"
     >
       <div className="flex w-full flex-grow flex-col gap-2">
         <div>
@@ -54,10 +54,10 @@ const RegisterForm = ({ handleFlipCard }: RegisterFormProps) => {
             {...register('username')}
             type="text"
             placeholder="Nome de Utilizador"
-            className="w-full rounded-md bg-light-green-50 px-3 py-2 text-sm text-main-green-700 placeholder-main-green-700 focus:outline-none focus:ring-2 focus:ring-main-green-500"
+            className="w-full rounded-md bg-powder-ash-100 px-3 py-2 text-sm text-dark-text placeholder-dark-text focus:outline-none"
           />
           {errors.username && (
-            <span className="text-xxs text-red-600">
+            <span className="text-xxs text-accent">
               {errors.username.message}
             </span>
           )}
@@ -68,12 +68,10 @@ const RegisterForm = ({ handleFlipCard }: RegisterFormProps) => {
             {...register('email')}
             type="email"
             placeholder="Email"
-            className="w-full rounded-md bg-light-green-50 px-3 py-2 text-sm text-main-green-700 placeholder-main-green-700 focus:outline-none focus:ring-2 focus:ring-main-green-500"
+            className="w-full rounded-md bg-powder-ash-100 px-3 py-2 text-sm text-dark-text placeholder-dark-text focus:outline-none"
           />
           {errors.email && (
-            <span className="text-xxs text-red-600">
-              {errors.email.message}
-            </span>
+            <span className="text-xxs text-accent">{errors.email.message}</span>
           )}
         </div>
 
@@ -82,10 +80,10 @@ const RegisterForm = ({ handleFlipCard }: RegisterFormProps) => {
             {...register('password')}
             type="password"
             placeholder="Palavra-passe"
-            className="w-full rounded-md bg-light-green-50 px-3 py-2 text-sm text-main-green-700 placeholder-main-green-700 focus:outline-none focus:ring-2 focus:ring-main-green-500"
+            className="w-full rounded-md bg-powder-ash-100 px-3 py-2 text-sm text-dark-text placeholder-dark-text focus:outline-none"
           />
           {errors.password && (
-            <span className="text-xxs text-red-600">
+            <span className="text-xxs text-accent">
               {errors.password.message}
             </span>
           )}
@@ -95,7 +93,7 @@ const RegisterForm = ({ handleFlipCard }: RegisterFormProps) => {
       <button
         disabled={isSubmitting}
         type="submit"
-        className="w-full rounded-md bg-green-house-800 p-3 text-sm font-semibold text-light-green-50 shadow-md transition duration-200 hover:bg-green-house-900"
+        className="w-full rounded-md bg-deep-sea-400 p-3 text-sm font-semibold text-dark-text shadow-md transition duration-200 hover:bg-deep-sea-300"
       >
         Registar
       </button>
