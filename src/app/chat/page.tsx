@@ -21,7 +21,6 @@ export default function Chat() {
     } catch (error) {
       console.error('Failed to send message', error);
     } finally {
-      console.log('newConversationId', newConversationId);
       router.push(`/chat/${newConversationId}`);
     }
   };

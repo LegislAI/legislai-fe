@@ -29,8 +29,6 @@ export const fetchUserInfo = createAsyncThunk(
     try {
       const response = await getUserInfo();
 
-      console.log('response, ', response);
-
       return response;
     } catch (error) {
       console.error('Error fetching user info:', error);
