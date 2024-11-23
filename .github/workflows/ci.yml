@@ -22,7 +22,7 @@ jobs:
         run: pnpm install
 
       - name: Run Prettier
-        run: pnpm prettier . --check
+        run: pnpm prettier
 
       - name: Run ESLint
-        run: pnpm eslint .
+        run: pnpm eslint
