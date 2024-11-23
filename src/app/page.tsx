@@ -3,15 +3,14 @@
 import { useEffect } from 'react';
 // import Image from 'next/image';
 
-import { useAppDispatch } from '@/state/hooks';
 import { useSidebarContext } from '@/components/Sidebar/sidebarContext';
-
-import { loadConversations } from '@/state/conversation/conversationSlice';
+import data from '@/data/conversations.json';
+import { loadConversations } from '@/store/conversation/conversationSlice';
+import { useAppDispatch } from '@/store/hooks';
 import { transformConversation } from '@/utils/transformer';
 
 // import TypewriterEffect from '@/components/TypewriterEffect';
 
-import data from '@/data/conversations.json';
 // import { CatchPhrases } from '@/data/phrases';
 
 export default function HomePage() {

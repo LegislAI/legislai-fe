@@ -1,11 +1,10 @@
 'use client';
 
-import { useAppSelector, useAppDispatch } from '@/state/hooks';
-import { addMessage } from '@/state/conversation/conversationSlice';
-
-import { useSidebarContext } from '@/components/Sidebar/sidebarContext';
 import ConversationMessages from '@/components/ConversationMessages';
 import ConversationInput from '@/components/MessageInput';
+import { useSidebarContext } from '@/components/Sidebar/sidebarContext';
+import { addMessage } from '@/store/conversation/conversationSlice';
+import { useAppSelector, useAppDispatch } from '@/store/hooks';
 
 type ChatParams = {
   params: {

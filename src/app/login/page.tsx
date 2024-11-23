@@ -1,20 +1,18 @@
 'use client';
 
 import { useRef, useState } from 'react';
-import Image from 'next/image';
-import { motion } from 'framer-motion';
 
-import FAQ from '@/views/FAQ';
-import PricingSection from '@/views/PricingSection';
+import { motion } from 'framer-motion';
+import Image from 'next/image';
+import { FaAnglesDown } from 'react-icons/fa6';
 
 import LoginComponent from '@/components/LoginComponent';
 import RegisterComponent from '@/components/RegisterComponent';
 import TypewriterEffect from '@/components/TypewriterEffect';
 // import PricingCard from '@/components/PricingCard';
-
-import { FaAnglesDown } from 'react-icons/fa6';
-
 import { CatchPhrases } from '@/data/phrases';
+import FAQ from '@/views/FAQ';
+import PricingSection from '@/views/PricingSection';
 
 export default function LoginPage() {
   const [isFlipped, setIsFlipped] = useState(false);

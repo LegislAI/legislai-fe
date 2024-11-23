@@ -1,8 +1,7 @@
 import { useState } from 'react';
 
-import data from '@/data/faq.json';
-
 import ExpandableQuestion from '@/components/ExpandableQuestion';
+import data from '@/data/faq.json';
 
 interface FAQProps {
   FAQSectionRef: React.RefObject<HTMLDivElement>;

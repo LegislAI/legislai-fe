@@ -1,11 +1,10 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'next/navigation';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { z } from 'zod';
 import { toast } from 'react-toastify';
+import { z } from 'zod';
 
 import { login } from '@/services/authService';
 import { LoginPayload } from '@/types';
@@ -24,6 +23,7 @@ const LoginForm = () => {
   });
 
   const onSubmit: SubmitHandler<FormFields> = async data => {
+    console.log('onSubmit called');
     try {
       const payload: LoginPayload = {
         email: data.email,

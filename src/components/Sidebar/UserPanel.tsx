@@ -1,28 +1,29 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+
 import { useRouter } from 'next/navigation';
-import { Session } from 'next-auth';
-
-import { logout } from '@/services/authService';
-
-import Button from '@/components/Button';
-
+import { FaRegCircleUser } from 'react-icons/fa6';
 import {
   IoSettingsOutline,
   IoLogOutOutline,
   IoSparklesOutline,
 } from 'react-icons/io5';
-import { FaRegCircleUser } from 'react-icons/fa6';
 
-interface UserPanelProps {
-  session: Session | null;
-}
+import Button from '@/components/Button';
+import { logout } from '@/services/authService';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { fetchUserInfo } from '@/store/user/userSlice';
 
-const UserPanel = ({ session }: UserPanelProps) => {
+const UserPanel = () => {
   const router = useRouter();
+  const dispatch = useAppDispatch();
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    dispatch(fetchUserInfo());
+  }, [dispatch]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -38,7 +39,11 @@ const UserPanel = ({ session }: UserPanelProps) => {
     };
   }, []);
 
-  if (!session) {
+  const { email, username, plan, isLoading, error } = useAppSelector(
+    state => state.user,
+  );
+
+  if (isLoading || error) {
     return null;
   }
 
@@ -51,8 +56,8 @@ const UserPanel = ({ session }: UserPanelProps) => {
         >
           <FaRegCircleUser className="text-2xl text-gray-100" />
           <div className="flex flex-col items-start text-gray-100">
-            <p className="text-sm font-bold">{session.user.username}</p>
-            <p className="text-xs">Plano gratuito</p>
+            <p className="text-sm font-bold">{username}</p>
+            <p className="text-xs">{plan}</p>
           </div>
         </button>
 
@@ -60,8 +65,8 @@ const UserPanel = ({ session }: UserPanelProps) => {
           <div className="absolute bottom-full z-10 w-full rounded-md bg-deep-sea-700 p-2 shadow-lg">
             <div className="flex items-center gap-3 pl-2">
               <div className="flex flex-col items-start text-gray-100">
-                <p className="text-sm font-bold">{session.user.username}</p>
-                <p className="text-sm">{session.user.email}</p>
+                <p className="text-sm font-bold">{username}</p>
+                <p className="text-sm">{email}</p>
               </div>
             </div>
 
