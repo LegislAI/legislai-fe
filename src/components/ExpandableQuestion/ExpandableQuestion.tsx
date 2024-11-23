@@ -1,5 +1,4 @@
 import { motion, AnimatePresence } from 'framer-motion';
-
 import { FaAngleDown, FaAngleUp } from 'react-icons/fa';
 
 interface SingleQuestionProps {

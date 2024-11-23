@@ -9,15 +9,11 @@ import {
   useRef,
   useState,
 } from 'react';
-import Link from 'next/link';
+
 import Image from 'next/image';
+import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-
-import { Tooltip } from 'react-tooltip';
-import { useSidebarContext } from './sidebarContext';
-
-import { Conversation } from '@/types';
-
+import { CiEdit } from 'react-icons/ci';
 import {
   IoCaretDown,
   IoCaretUp,
@@ -25,8 +21,12 @@ import {
   IoFilter,
   IoTrashOutline,
 } from 'react-icons/io5';
-import { CiEdit } from 'react-icons/ci';
-import { useAppSelector } from '@/state/hooks';
+import { Tooltip } from 'react-tooltip';
+
+import { useAppSelector } from '@/store/hooks';
+import { Conversation } from '@/types';
+
+import { useSidebarContext } from './sidebarContext';
 
 type SidebarDropdownProps = {
   icon: ReactNode | string;

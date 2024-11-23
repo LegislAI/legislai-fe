@@ -1,15 +1,17 @@
 import './globals.css';
 import type { Metadata } from 'next';
-import { raleway } from '@/utils/fonts';
-
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
 
-import StoreProvider from './StoreProvider';
-import { SidebarProvider } from '@/components/Sidebar/sidebarContext';
+import AuthWrapper from '@/components/AuthWrapper';
 import ClientSessionProvider from '@/components/ClientSessionProvider';
 import SideBar from '@/components/Sidebar';
+import { SidebarProvider } from '@/components/Sidebar/sidebarContext';
 import ToastComponent from '@/components/ToastComponent';
+import { authOptions } from '@/lib/auth';
+import { raleway } from '@/utils/fonts';
+
+import StoreProvider from './StoreProvider';
+
 import 'react-toastify/dist/ReactToastify.css';
 
 export const metadata: Metadata = {
@@ -24,16 +26,20 @@ export default async function RootLayout({
 }>) {
   const session = await getServerSession(authOptions);
 
+  console.log('session:', session);
+
   return (
     <html lang="en">
       <body className={`bg-background ${raleway.className} tracking-wide`}>
         <ClientSessionProvider session={session}>
           <StoreProvider>
-            <ToastComponent />
-            <SidebarProvider>
-              <SideBar />
-              <main>{children}</main>
-            </SidebarProvider>
+            <AuthWrapper>
+              <ToastComponent />
+              <SidebarProvider>
+                <SideBar />
+                <main>{children}</main>
+              </SidebarProvider>
+            </AuthWrapper>
           </StoreProvider>
         </ClientSessionProvider>
       </body>

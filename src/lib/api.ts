@@ -20,6 +20,9 @@ const processQueue = (error: any | null, token = null) => {
 
 export const AUTH_API = axios.create({
   baseURL: process.env.NEXT_PUBLIC_AUTH_API_BASE_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
 });
 
 AUTH_API.interceptors.request.use(
@@ -74,7 +77,103 @@ AUTH_API.interceptors.response.use(
           },
           {
             headers: {
-              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+              Authorization: `Bearer ${session?.refreshToken}`,
+            },
+          },
+        );
+
+        if (response.status !== 200) {
+          throw new Error('Error during token refresh');
+        }
+
+        const tokens = response.data;
+        const decodedToken = tokens.access_token;
+        const accessTokenExpires = decodedToken?.exp
+          ? decodedToken.exp * 1000
+          : 0;
+
+        if (session) {
+          session.accessToken = tokens.access_token;
+          session.refreshToken = tokens.refresh_token;
+          session.expires = String(accessTokenExpires);
+        }
+
+        processQueue(null, tokens.access_token);
+        isRefreshing = false;
+
+        originalRequest.headers['Authorization'] =
+          `Bearer ${tokens.access_token}`;
+
+        return AUTH_API(originalRequest);
+      } catch (error) {
+        processQueue(error, null);
+        isRefreshing = false;
+
+        signOut();
+
+        return Promise.reject(error);
+      }
+    }
+
+    return Promise.reject(error);
+  },
+);
+
+export const USERS_API = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_USERS_API_BASE_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
+USERS_API.interceptors.request.use(
+  async (config: InternalAxiosRequestConfig) => {
+    const session = await getSession();
+
+    if (session?.accessToken) {
+      config.headers['Authorization'] = `Bearer ${session.accessToken}`;
+    }
+
+    return config;
+  },
+  error => {
+    return Promise.reject(error);
+  },
+);
+
+USERS_API.interceptors.response.use(
+  response => response,
+  async (error: AxiosError) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const originalRequest = error.config as any;
+
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      if (isRefreshing) {
+        return new Promise((resolve, reject) => {
+          failedQueue.push({ resolve, reject });
+        })
+          .then(token => {
+            originalRequest.headers['Authorization'] = `Bearer ${token}`;
+            return AUTH_API(originalRequest);
+          })
+          .catch(err => {
+            return Promise.reject(err);
+          });
+      }
+
+      originalRequest._retry = true;
+      isRefreshing = true;
+
+      try {
+        const session = await getSession();
+        const response = await AUTH_API.post(
+          '/refresh-tokens',
+          {
+            email: session?.user?.email,
+            access_token: session?.accessToken,
+          },
+          {
+            headers: {
               Authorization: `Bearer ${session?.refreshToken}`,
             },
           },

@@ -1,12 +1,12 @@
-import { NextAuthOptions } from 'next-auth';
-import CredentialsProvider from 'next-auth/providers/credentials';
-import { redirect } from 'next/navigation';
-import { JWT } from 'next-auth/jwt';
-import { jwtDecode } from 'jwt-decode';
 import axios from 'axios';
+import { jwtDecode } from 'jwt-decode';
+import { redirect } from 'next/navigation';
+import { NextAuthOptions } from 'next-auth';
+import { JWT } from 'next-auth/jwt';
+import CredentialsProvider from 'next-auth/providers/credentials';
 
 import { AUTH_API } from '@/lib/api';
-import { User } from '@/types';
+import { UserAuth } from '@/types';
 
 const REFRESH_AUTH_API = axios.create({
   baseURL: process.env.NEXT_PUBLIC_AUTH_API_BASE_URL,
@@ -17,7 +17,7 @@ const refreshTokens = async (token: JWT) => {
     const response = await REFRESH_AUTH_API.post(
       '/refresh-tokens',
       {
-        email: (token.user as User).email,
+        email: (token.user as UserAuth).email,
         access_token: token.accessToken, // old access token to revoke
       },
       {
@@ -58,7 +58,6 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials) {
         if (!credentials) {
-          console.error('No credentials provided.');
           return null;
         }
 
@@ -75,6 +74,11 @@ export const authOptions: NextAuthOptions = {
           return null;
         } catch (error) {
           if (axios.isAxiosError(error) && error.response?.status === 401) {
+            console.error(
+              'Error during login:',
+              error.status,
+              error.response.data,
+            );
             throw new Error('Email ou palavra-passe inválidos.');
           } else {
             throw new Error('Erro ao iniciar sessão.');
@@ -86,11 +90,10 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     jwt: async ({ token, user }) => {
       // console.log('Debug: JWT Callback - Token', token);
-
       // Situation 1: User just logged in
       if (user) {
         // console.log('Debug: User logged in');
-        const typedUser = user as unknown as User;
+        const typedUser = user as unknown as UserAuth;
         const decodedToken = jwtDecode(typedUser.access_token) as {
           exp: number;
         };
@@ -144,6 +147,7 @@ export const authOptions: NextAuthOptions = {
 
       // Situation 5: Access token is still valid
       // console.log('Debug: Access token is still valid');
+      console.log('Next auth jwt token is still valid');
       return token;
     },
     session: async ({ session, token }) => {
@@ -158,7 +162,7 @@ export const authOptions: NextAuthOptions = {
         session.accessToken = token.accessToken as string;
         session.refreshToken = token.refreshToken as string;
         session.expires = String(token.accessTokenExpires);
-        session.user = token.user as User;
+        session.user = token.user as UserAuth;
       }
 
       return session;

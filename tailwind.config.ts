@@ -1,9 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 
-import type { Config } from 'tailwindcss';
-
 import typography from '@tailwindcss/typography';
 import daisyui from 'daisyui';
+import type { Config } from 'tailwindcss';
 
 const config: Config = {
   content: [

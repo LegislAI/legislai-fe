@@ -1,8 +1,10 @@
 'use client';
 
 import { useRef } from 'react';
+
 import { Provider } from 'react-redux';
-import { makeStore, AppStore } from '@/state/store';
+
+import { makeStore, AppStore } from '@/store/store';
 
 type StoreProviderProps = {
   children: React.ReactNode;

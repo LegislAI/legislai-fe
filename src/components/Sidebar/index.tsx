@@ -1,28 +1,24 @@
 'use client';
 
-import { useSession } from 'next-auth/react';
-import { usePathname } from 'next/navigation';
 import Image from 'next/image';
-
-import { useSidebarContext } from './sidebarContext';
-
-import SidebarButton from './SidebarButton';
-import SidebarDropdown from './SidebarDropdown';
-import UserPanel from './UserPanel';
-
-import { PUBLIC_ROUTES } from '@/lib/routes';
-
+import { usePathname } from 'next/navigation';
+import { IoHomeOutline } from 'react-icons/io5';
 import {
   TbLayoutSidebarLeftCollapse,
   TbLayoutSidebarLeftExpand,
 } from 'react-icons/tb';
-import { IoHomeOutline } from 'react-icons/io5';
+
+import { PUBLIC_ROUTES } from '@/lib/routes';
+
+import SidebarButton from './SidebarButton';
+import { useSidebarContext } from './sidebarContext';
+import SidebarDropdown from './SidebarDropdown';
+import UserPanel from './UserPanel';
 
 const SideBar = () => {
-  const { data: session } = useSession();
   const pathname = usePathname();
-  const { isOpen, toggleSidebar } = useSidebarContext();
   const isPublicRoute = PUBLIC_ROUTES.some(route => pathname.startsWith(route));
+  const { isOpen, toggleSidebar } = useSidebarContext();
 
   if (isPublicRoute) {
     return null;
@@ -78,7 +74,7 @@ const SideBar = () => {
             </div>
           </div>
 
-          <UserPanel session={session} />
+          <UserPanel />
         </div>
       </div>
     </>

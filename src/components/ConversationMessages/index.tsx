@@ -1,8 +1,8 @@
 'use client';
 
 import { useRef, useEffect } from 'react';
-import Image from 'next/image';
 
+import Image from 'next/image';
 import { FaCircleUser } from 'react-icons/fa6';
 
 import { Message } from '@/types';
