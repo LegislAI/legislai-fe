@@ -90,6 +90,7 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     jwt: async ({ token, user }) => {
       // console.log('Debug: JWT Callback - Token', token);
+
       // Situation 1: User just logged in
       if (user) {
         // console.log('Debug: User logged in');
@@ -147,7 +148,6 @@ export const authOptions: NextAuthOptions = {
 
       // Situation 5: Access token is still valid
       // console.log('Debug: Access token is still valid');
-      console.log('Next auth jwt token is still valid');
       return token;
     },
     session: async ({ session, token }) => {

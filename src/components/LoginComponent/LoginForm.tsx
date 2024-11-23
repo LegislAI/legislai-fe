@@ -23,7 +23,6 @@ const LoginForm = () => {
   });
 
   const onSubmit: SubmitHandler<FormFields> = async data => {
-    console.log('onSubmit called');
     try {
       const payload: LoginPayload = {
         email: data.email,
