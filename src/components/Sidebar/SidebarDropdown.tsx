@@ -26,7 +26,7 @@ import { Tooltip } from 'react-tooltip';
 import { useAppSelector } from '@/store/hooks';
 import { Conversation } from '@/types';
 
-import { useSidebarContext } from './sidebarContext';
+import { useSidebarContext } from '../../context/SidebarContext';
 
 type SidebarDropdownProps = {
   icon: ReactNode | string;

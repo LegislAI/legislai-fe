@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 
 import MessageInput from '@/components/MessageInput';
-import { useSidebarContext } from '@/components/Sidebar/sidebarContext';
+import { useSidebarContext } from '@/context/SidebarContext';
 import { addMessageToNewConversation } from '@/store/conversation/conversationSlice';
 import { useAppDispatch } from '@/store/hooks';
 

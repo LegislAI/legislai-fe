@@ -1,6 +1,6 @@
 import { ToastContainer, Bounce } from 'react-toastify';
 
-const ToastComponent = () => {
+const ToastProvider = () => {
   return (
     <ToastContainer
       position="top-right"
@@ -16,4 +16,4 @@ const ToastComponent = () => {
   );
 };
 
-export default ToastComponent;
+export default ToastProvider;

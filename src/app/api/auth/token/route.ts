@@ -1,6 +1,6 @@
+import { jwtDecode } from 'jwt-decode';
 import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
-import { jwtDecode } from 'jwt-decode';
 
 const AUTH_COOKIE = 'access_token';
 
