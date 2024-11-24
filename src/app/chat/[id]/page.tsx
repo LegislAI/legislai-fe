@@ -2,7 +2,7 @@
 
 import ConversationMessages from '@/components/ConversationMessages';
 import ConversationInput from '@/components/MessageInput';
-import { useSidebarContext } from '@/components/Sidebar/sidebarContext';
+import { useSidebarContext } from '@/context/SidebarContext';
 import { addMessage } from '@/store/conversation/conversationSlice';
 import { useAppSelector, useAppDispatch } from '@/store/hooks';
 

@@ -3,7 +3,7 @@
 import { useEffect } from 'react';
 // import Image from 'next/image';
 
-import { useSidebarContext } from '@/components/Sidebar/sidebarContext';
+import { useSidebarContext } from '@/context/SidebarContext';
 import data from '@/data/conversations.json';
 import { loadConversations } from '@/store/conversation/conversationSlice';
 import { useAppDispatch } from '@/store/hooks';

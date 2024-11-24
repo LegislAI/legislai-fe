@@ -2,9 +2,9 @@ import './globals.css';
 import type { Metadata } from 'next';
 
 import SideBar from '@/components/Sidebar';
-import { SidebarProvider } from '@/components/Sidebar/sidebarContext';
-import ToastComponent from '@/components/ToastComponent';
+import ToastProvider from '@/components/ToastProvider';
 import { AuthProvider } from '@/context/AuthContext';
+import { SidebarProvider } from '@/context/SidebarContext';
 import { raleway } from '@/utils/fonts';
 
 import StoreProvider from './StoreProvider';
@@ -26,7 +26,7 @@ export default function RootLayout({
       <body className={`bg-background ${raleway.className} tracking-wide`}>
         <AuthProvider>
           <StoreProvider>
-            <ToastComponent />
+            <ToastProvider />
             <SidebarProvider>
               <SideBar />
               <main>{children}</main>

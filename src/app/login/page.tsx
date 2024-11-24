@@ -9,7 +9,6 @@ import { FaAnglesDown } from 'react-icons/fa6';
 import LoginComponent from '@/components/LoginComponent';
 import RegisterComponent from '@/components/RegisterComponent';
 import TypewriterEffect from '@/components/TypewriterEffect';
-// import PricingCard from '@/components/PricingCard';
 import { CatchPhrases } from '@/data/phrases';
 import FAQ from '@/views/FAQ';
 import PricingSection from '@/views/PricingSection';
