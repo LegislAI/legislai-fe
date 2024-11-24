@@ -5,8 +5,8 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { z } from 'zod';
 
-import { register as registerUser } from '@/services/authService';
-import { RegisterPayload } from '@/types';
+import { signUp } from '@/services/authService';
+import { SignUpPayload } from '@/types';
 import { RegisterSchema } from '@/types/schemas';
 
 type FormFields = z.infer<typeof RegisterSchema>;
@@ -27,13 +27,13 @@ const RegisterForm = ({ handleFlipCard }: RegisterFormProps) => {
 
   const onSubmit: SubmitHandler<FormFields> = async data => {
     try {
-      const payload: RegisterPayload = {
+      const payload: SignUpPayload = {
         username: data.username,
         email: data.email,
         password: data.password,
       };
 
-      await registerUser(payload);
+      await signUp(payload);
       toast.success('Utilizador registado com sucesso.');
 
       reset();

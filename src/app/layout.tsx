@@ -1,13 +1,10 @@
 import './globals.css';
 import type { Metadata } from 'next';
-import { getServerSession } from 'next-auth';
 
-import AuthWrapper from '@/components/AuthWrapper';
-import ClientSessionProvider from '@/components/ClientSessionProvider';
 import SideBar from '@/components/Sidebar';
 import { SidebarProvider } from '@/components/Sidebar/sidebarContext';
 import ToastComponent from '@/components/ToastComponent';
-import { authOptions } from '@/lib/auth';
+import { AuthProvider } from '@/context/AuthContext';
 import { raleway } from '@/utils/fonts';
 
 import StoreProvider from './StoreProvider';
@@ -19,27 +16,23 @@ export const metadata: Metadata = {
   description: 'LegislAI',
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await getServerSession(authOptions);
-
   return (
     <html lang="en">
       <body className={`bg-background ${raleway.className} tracking-wide`}>
-        <ClientSessionProvider session={session}>
+        <AuthProvider>
           <StoreProvider>
-            <AuthWrapper>
-              <ToastComponent />
-              <SidebarProvider>
-                <SideBar />
-                <main>{children}</main>
-              </SidebarProvider>
-            </AuthWrapper>
+            <ToastComponent />
+            <SidebarProvider>
+              <SideBar />
+              <main>{children}</main>
+            </SidebarProvider>
           </StoreProvider>
-        </ClientSessionProvider>
+        </AuthProvider>
       </body>
     </html>
   );

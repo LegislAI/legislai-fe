@@ -1,13 +1,7 @@
-import { signIn, signOut } from 'next-auth/react';
-
 import { AUTH_API } from '@/lib/api';
-import { RegisterPayload, LoginPayload } from '@/types';
+import { SignUpPayload, SignInPayload } from '@/types';
 
-export const register = async ({
-  username,
-  email,
-  password,
-}: RegisterPayload) => {
+export const signUp = async ({ username, email, password }: SignUpPayload) => {
   try {
     const response = await AUTH_API.post('/register', {
       username,
@@ -27,27 +21,28 @@ export const register = async ({
   }
 };
 
-export const login = async ({ email, password }: LoginPayload) => {
+export const signIn = async ({ email, password }: SignInPayload) => {
   try {
-    const response = await signIn('credentials', {
+    const response = await AUTH_API.post('/login', {
       email,
       password,
-      redirect: false,
     });
 
-    if (response?.error) {
-      throw new Error(response.error);
+    if (response.status === 200) {
+      return response;
+    } else if (response.status === 401) {
+      throw new Error('Email ou password inválidos.');
+    } else {
+      throw new Error('Erro ao inciar sessão.');
     }
-
-    return response;
   } catch (error) {
     throw error;
   }
 };
 
-export const logout = async () => {
+export const signOut = async () => {
   try {
-    await signOut({ redirect: true });
+    await AUTH_API.post('/logout');
   } catch (error) {
     throw error;
   }

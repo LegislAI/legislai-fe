@@ -25,7 +25,6 @@
     "framer-motion": "^11.11.11",
     "jwt-decode": "^4.0.0",
     "next": "14.2.13",
-    "next-auth": "^4.24.10",
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.53.1",

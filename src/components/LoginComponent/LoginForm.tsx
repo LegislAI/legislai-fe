@@ -1,19 +1,19 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter } from 'next/navigation';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { z } from 'zod';
 
-import { login } from '@/services/authService';
-import { LoginPayload } from '@/types';
+import { useAuth } from '@/context/AuthContext';
+import { SignInPayload } from '@/types';
 import { LoginSchema } from '@/types/schemas';
 
 type FormFields = z.infer<typeof LoginSchema>;
 
 const LoginForm = () => {
-  const router = useRouter();
+  const { login } = useAuth();
+
   const {
     register,
     handleSubmit,
@@ -24,13 +24,12 @@ const LoginForm = () => {
 
   const onSubmit: SubmitHandler<FormFields> = async data => {
     try {
-      const payload: LoginPayload = {
+      const payload: SignInPayload = {
         email: data.email,
         password: data.password,
       };
 
       await login(payload);
-      router.push('/');
     } catch (error) {
       toast.error((error as Error).message);
     }
