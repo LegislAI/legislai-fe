@@ -1,17 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getToken } from 'next-auth/jwt';
 
 import { ROOT, LOGIN, PUBLIC_ROUTES } from '@/lib/routes';
+import { cookies } from 'next/headers';
+
+const AUTH_COOKIE = 'access_token';
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   try {
-    // Get the token using next-auth
-    const token = await getToken({
-      req: request,
-      secret: process.env.NEXTAUTH_SECRET,
-    });
+    const token = cookies().get(AUTH_COOKIE)?.value;
 
     // Check if the current path is a public route
     const isPublicRoute = PUBLIC_ROUTES.some(route =>
