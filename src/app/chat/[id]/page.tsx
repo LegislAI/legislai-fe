@@ -1,7 +1,9 @@
 'use client';
 
 import ConversationMessages from '@/components/ConversationMessages';
+import LoadingScreen from '@/components/LoadingScreen';
 import ConversationInput from '@/components/MessageInput';
+import { useAuth } from '@/context/AuthContext';
 import { useSidebarContext } from '@/context/SidebarContext';
 import { addMessage } from '@/store/conversation/conversationSlice';
 import { useAppSelector, useAppDispatch } from '@/store/hooks';
@@ -18,10 +20,15 @@ export default function Chat({ params: { id } }: ChatParams) {
     state => state.conversation.conversations[id].messages,
   );
   const dispatch = useAppDispatch();
+  const { isLoading } = useAuth();
 
   const handleSendMessage = (messageText: string) => {
     dispatch(addMessage({ conversationId: id, message: messageText }));
   };
+
+  if (isLoading) {
+    return <LoadingScreen />;
+  }
 
   return (
     <div

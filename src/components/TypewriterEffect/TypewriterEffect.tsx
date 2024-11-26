@@ -53,7 +53,7 @@ const TypewriterEffect = ({
 
   return (
     <div className="min-h-8">
-      <p className="font-bol text-2xl text-light-text">{displayedText}</p>
+      <p className="text-2xl text-light-text">{displayedText}</p>
     </div>
   );
 };

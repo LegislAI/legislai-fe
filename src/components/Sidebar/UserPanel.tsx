@@ -11,13 +11,20 @@ import {
 } from 'react-icons/io5';
 
 import Button from '@/components/Button';
-import { useAuth } from '@/context/AuthContext';
 
-const UserPanel = () => {
+interface UserPanelProps {
+  userInfo: {
+    username: string | undefined;
+    email: string | undefined;
+    plan: string | undefined;
+  };
+  handleLogout: () => void;
+}
+
+const UserPanel = ({ userInfo, handleLogout }: UserPanelProps) => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
-  const { logout, user, isLoading } = useAuth();
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -33,7 +40,7 @@ const UserPanel = () => {
     };
   }, []);
 
-  if (isLoading || !user) {
+  if (!userInfo) {
     return null;
   }
 
@@ -46,8 +53,8 @@ const UserPanel = () => {
         >
           <FaRegCircleUser className="text-2xl text-gray-100" />
           <div className="flex flex-col items-start text-gray-100">
-            <p className="text-sm font-bold">{user.username}</p>
-            <p className="text-xs">{user.plan}</p>
+            <p className="text-sm font-bold">{userInfo.username}</p>
+            <p className="text-xs">{userInfo.plan}</p>
           </div>
         </button>
 
@@ -55,8 +62,8 @@ const UserPanel = () => {
           <div className="absolute bottom-full z-10 w-full rounded-md bg-deep-sea-700 p-2 shadow-lg">
             <div className="flex items-center gap-3 pl-2">
               <div className="flex flex-col items-start text-gray-100">
-                <p className="text-sm font-bold">{user.username}</p>
-                <p className="text-sm">{user.email}</p>
+                <p className="text-sm font-bold">{userInfo.username}</p>
+                <p className="text-sm">{userInfo.email}</p>
               </div>
             </div>
 
@@ -79,7 +86,7 @@ const UserPanel = () => {
             <Button
               icon={<IoLogOutOutline className="text-xl text-gray-100" />}
               text="Terminar sessão"
-              onClick={() => logout()}
+              onClick={handleLogout}
             />
           </div>
         )}
