@@ -8,6 +8,7 @@ import {
   TbLayoutSidebarLeftExpand,
 } from 'react-icons/tb';
 
+import { useAuth } from '@/context/AuthContext';
 import { useSidebarContext } from '@/context/SidebarContext';
 import { PUBLIC_ROUTES } from '@/lib/routes';
 
@@ -19,10 +20,17 @@ const SideBar = () => {
   const pathname = usePathname();
   const isPublicRoute = PUBLIC_ROUTES.some(route => pathname.startsWith(route));
   const { isOpen, toggleSidebar } = useSidebarContext();
+  const { logout, user, isLoading } = useAuth();
 
-  if (isPublicRoute) {
+  if (isPublicRoute || isLoading) {
     return null;
   }
+
+  const userInfo = {
+    username: user?.username,
+    email: user?.email,
+    plan: user?.plan,
+  };
 
   return (
     <>
@@ -74,7 +82,7 @@ const SideBar = () => {
             </div>
           </div>
 
-          <UserPanel />
+          <UserPanel userInfo={userInfo} handleLogout={logout} />
         </div>
       </div>
     </>

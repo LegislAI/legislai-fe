@@ -2,7 +2,9 @@
 
 import { useRouter } from 'next/navigation';
 
+import LoadingScreen from '@/components/LoadingScreen';
 import MessageInput from '@/components/MessageInput';
+import { useAuth } from '@/context/AuthContext';
 import { useSidebarContext } from '@/context/SidebarContext';
 import { addMessageToNewConversation } from '@/store/conversation/conversationSlice';
 import { useAppDispatch } from '@/store/hooks';
@@ -10,6 +12,7 @@ import { useAppDispatch } from '@/store/hooks';
 export default function Chat() {
   const router = useRouter();
   const { isOpen } = useSidebarContext();
+  const { isLoading } = useAuth();
   const dispatch = useAppDispatch();
 
   let newConversationId = '';
@@ -24,6 +27,10 @@ export default function Chat() {
       router.push(`/chat/${newConversationId}`);
     }
   };
+
+  if (isLoading) {
+    return <LoadingScreen />;
+  }
 
   return (
     <div
