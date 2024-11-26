@@ -2,18 +2,27 @@
 
 import { useEffect, useRef, useState, ChangeEvent } from 'react';
 
-import Image from 'next/image';
-import { FaRegTimesCircle } from 'react-icons/fa';
 import { FiPaperclip } from 'react-icons/fi';
 import { IoSend } from 'react-icons/io5';
 
-type MessageInputProps = {
-  onSendMessage: (message: string) => void;
+import { useAuth } from '@/context/AuthContext';
+
+import { ImageInput, DocumentInput } from './FileInput';
+
+export type FileInfo = {
+  name: string;
+  type: string;
+  value: string;
 };
 
+interface MessageInputProps {
+  onSendMessage: (message: string) => void;
+}
+
 const MessageInput = ({ onSendMessage }: MessageInputProps) => {
+  const { user } = useAuth();
   const [inputValue, setInputValue] = useState('');
-  const [image, setImage] = useState<string | undefined>(undefined);
+  const [files, setFiles] = useState<FileInfo[]>([]);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -45,7 +54,7 @@ const MessageInput = ({ onSendMessage }: MessageInputProps) => {
   };
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files === null) return;
+    if (!e.target.files || !e.target.files[0]) return;
 
     const file = e.target.files[0];
     const reader = new FileReader();
@@ -53,7 +62,12 @@ const MessageInput = ({ onSendMessage }: MessageInputProps) => {
 
     reader.onload = () => {
       if (typeof reader.result === 'string') {
-        setImage(reader.result);
+        const newFile: FileInfo = {
+          name: file.name,
+          type: file.type,
+          value: reader.result,
+        };
+        setFiles(prev => [...prev, newFile]);
       }
     };
 
@@ -62,47 +76,65 @@ const MessageInput = ({ onSendMessage }: MessageInputProps) => {
     };
   };
 
+  const handleRemoveFile = (file: FileInfo) => {
+    setFiles(prev => prev.filter(f => f !== file));
+  };
+
   useEffect(() => {
     adjustTextareaHeight();
   }, [inputValue]);
 
+  useEffect(() => {
+    console.log('file:', files);
+  }, [files]);
+
   return (
     <div className="flex w-full flex-col">
       <div
-        className={`w-full ${image ? 'rounded-2xl bg-deep-sea-900/50 pt-3' : ''}`}
+        className={`w-full ${files.length > 0 ? 'rounded-2xl bg-deep-sea-900/50 pt-2' : ''}`}
       >
-        {image && (
-          <button className="relative">
-            <Image
-              src={image}
-              width={128}
-              height={80}
-              alt="uploaded image"
-              className="mb-2 ml-3 cursor-default rounded-lg"
-            />
-            <FaRegTimesCircle
-              className="absolute right-0.5 top-0.5 text-xl text-gray-300 hover:text-gray-400"
-              onClick={() => setImage(undefined)}
-            />
-          </button>
+        {files.length > 0 && (
+          <div className="flex flex-wrap gap-2">
+            {files.map((file, index) => (
+              <div key={index} className="flex items-center">
+                {file.type.includes('image') ? (
+                  <ImageInput
+                    file={file}
+                    removeFileHandler={(file: FileInfo) =>
+                      handleRemoveFile(file)
+                    }
+                  />
+                ) : (
+                  <DocumentInput
+                    file={file}
+                    removeFileHandler={(file: FileInfo) =>
+                      handleRemoveFile(file)
+                    }
+                  />
+                )}
+              </div>
+            ))}
+          </div>
         )}
         <div className="relative flex w-full gap-4 rounded-2xl bg-deep-sea-900 shadow-lg">
-          <button
-            className="absolute left-4 top-1/2 -translate-y-1/2"
-            onClick={handleFileUpload}
-          >
-            <FiPaperclip className="cursor-pointer text-xl text-gray-300 hover:text-gray-400" />
-            <input
-              type="file"
-              ref={fileInputRef}
-              className="hidden"
-              accept="image/*"
-              onChange={e => handleFileChange(e)}
-            />
-          </button>
+          {user && user.plan != 'free' && (
+            <button
+              className="absolute left-4 top-1/2 -translate-y-1/2"
+              onClick={handleFileUpload}
+            >
+              <FiPaperclip className="cursor-pointer text-xl text-gray-300 hover:text-gray-400" />
+              <input
+                type="file"
+                ref={fileInputRef}
+                className="hidden"
+                accept="image/*,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                onChange={e => handleFileChange(e)}
+              />
+            </button>
+          )}
           <textarea
             ref={textareaRef}
-            className="w-full resize-none rounded-2xl bg-transparent py-4 pl-14 pr-16 text-sm text-gray-200 placeholder-gray-300 outline-none placeholder:text-sm"
+            className={`w-full resize-none rounded-2xl bg-transparent py-4 ${user && user.plan != 'free' ? 'pl-14' : 'pl-6'} pr-16 text-sm text-gray-200 placeholder-gray-300 outline-none placeholder:text-sm`}
             rows={1}
             placeholder="Escreva uma mensagem..."
             value={inputValue}
