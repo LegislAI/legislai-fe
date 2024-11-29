@@ -1,6 +1,9 @@
-import { useEffect, useState } from 'react';
+'use client';
+
+import { useRouter } from 'next/navigation';
 
 import PricingCard from '@/components/PricingCard';
+import { updateUserPlan } from '@/services/usersServices';
 
 interface UpgradePricingSectionProps {
   currentPlanId: string;
@@ -9,17 +12,20 @@ interface UpgradePricingSectionProps {
 const UpgradePricingSection = ({
   currentPlanId,
 }: UpgradePricingSectionProps) => {
-  const [planToSubscribe, setPlanToSubscribe] = useState<string>('');
+  const router = useRouter();
 
-  const handleSubscribePlan = (planId: string) => {
-    setPlanToSubscribe(planId);
-  };
+  const handleSubscribePlan = async (planId: string) => {
+    try {
+      const response = await updateUserPlan(planId, 'tok_visa', 'card');
 
-  useEffect(() => {
-    if (planToSubscribe) {
-      console.log(`Subscribing to plan: ${planToSubscribe}`);
+      if (response.status === 200) {
+        console.log('Plano atualizado com sucesso');
+        router.push('/');
+      }
+    } catch (error) {
+      console.error('Erro ao atualizar o plano:', error);
     }
-  }, [planToSubscribe]);
+  };
 
   return (
     <div className="relative flex h-screen w-full flex-col items-center justify-center">

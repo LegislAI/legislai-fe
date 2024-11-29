@@ -25,7 +25,7 @@ interface StreamingPayload {
 export const sendMessageToRagApi = createAsyncThunk(
   'conversation/sendMessageToRagApi',
   async (payload: StreamingPayload, { dispatch, rejectWithValue }) => {
-    const { conversationId, question, isNewConversation } = payload;
+    const { conversationId, question, attachments, isNewConversation } = payload;
     let summary = '';
     let reference = '';
     let field = '';
@@ -33,9 +33,9 @@ export const sendMessageToRagApi = createAsyncThunk(
     if (isNewConversation === false) {
       dispatch(
         addMessage({
-          conversationId: payload.conversationId,
-          question: payload.question,
-          attachments: payload.attachments || [],
+          conversationId: conversationId,
+          question: question,
+          attachments: attachments || [],
         }),
       );
     }
@@ -55,6 +55,7 @@ export const sendMessageToRagApi = createAsyncThunk(
           },
           body: JSON.stringify({
             query: question,
+            attachments: attachments ? attachments[0].value : '',
           }),
         },
       );
