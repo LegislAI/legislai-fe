@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { FaRegTimesCircle, FaRegFileAlt } from 'react-icons/fa';
 
-import { FileInfo } from './MessageInput';
+import { FileInfo } from '@/types/conversations';
 
 interface FileInputProps {
   file: FileInfo;

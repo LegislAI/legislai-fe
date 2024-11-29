@@ -12,14 +12,21 @@ export type Conversation = {
 export type Message = {
   messageIndex: string;
   message: string;
-  attachments: Atatchment[];
+  attachments: FileInfo[];
+  references: Reference[];
   sender: string;
   createdAt: string;
 };
 
-export type Atatchment = {
-  summary: string;
-  reference: string;
+export type FileInfo = {
+  name: string;
+  type: string;
+  value: string;
+};
+
+export type Reference = {
+  designation: string;
+  url: string;
 };
 
 export interface ConversationApiResponse {

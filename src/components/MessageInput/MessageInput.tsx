@@ -6,17 +6,12 @@ import { FiPaperclip } from 'react-icons/fi';
 import { IoSend } from 'react-icons/io5';
 
 import { useAuth } from '@/context/AuthContext';
+import { FileInfo } from '@/types/conversations';
 
 import { ImageInput, DocumentInput } from './FileInput';
 
-export type FileInfo = {
-  name: string;
-  type: string;
-  value: string;
-};
-
 interface MessageInputProps {
-  onSendMessage: (message: string) => void;
+  onSendMessage: (message: string, attachments: FileInfo[]) => void;
 }
 
 const MessageInput = ({ onSendMessage }: MessageInputProps) => {
@@ -35,7 +30,8 @@ const MessageInput = ({ onSendMessage }: MessageInputProps) => {
 
   const handleSubmit = () => {
     if (inputValue.trim()) {
-      onSendMessage(inputValue);
+      onSendMessage(inputValue, files.length > 0 ? files : []);
+      setFiles([]);
       setInputValue('');
     }
   };

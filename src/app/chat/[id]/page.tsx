@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 
 import ConversationMessages from '@/components/ConversationMessages';
 import LoadingScreen from '@/components/LoadingScreen';
-import ConversationInput from '@/components/MessageInput';
+import MessageInput from '@/components/MessageInput';
 import { useAuth } from '@/context/AuthContext';
 import { useSidebarContext } from '@/context/SidebarContext';
 import {
@@ -14,6 +14,7 @@ import {
   clearError,
 } from '@/store/conversation/conversationSlice';
 import { useAppSelector, useAppDispatch } from '@/store/hooks';
+import { FileInfo } from '@/types/conversations';
 
 type ConversationParams = {
   params: {
@@ -71,12 +72,16 @@ export default function Conversation({ params: { id } }: ConversationParams) {
     toggleHistoryOpen,
   ]);
 
-  const handleSendMessage = async (messageText: string) => {
+  const handleSendMessage = async (
+    messageText: string,
+    attachments: FileInfo[],
+  ) => {
     // dispatch(addMessage({ conversationId: id, message: messageText }));
     await dispatch(
       sendMessageToRagApi({
         conversationId: id,
         question: messageText,
+        attachments: attachments || [],
         isNewConversation: false,
       }),
     );
@@ -106,7 +111,7 @@ export default function Conversation({ params: { id } }: ConversationParams) {
         </div>
 
         <div className="w-full">
-          <ConversationInput onSendMessage={handleSendMessage} />
+          <MessageInput onSendMessage={handleSendMessage} />
         </div>
       </div>
     </div>
