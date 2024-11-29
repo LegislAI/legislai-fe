@@ -54,7 +54,7 @@ const UserPanel = ({ userInfo, handleLogout }: UserPanelProps) => {
           <FaRegCircleUser className="text-2xl text-gray-100" />
           <div className="flex flex-col items-start text-gray-100">
             <p className="text-sm font-bold">{userInfo.username}</p>
-            <p className="text-xxs font-bold text-accent">{userInfo.plan}</p>
+            <p className="text-xs">{userInfo.plan}</p>
           </div>
         </button>
 

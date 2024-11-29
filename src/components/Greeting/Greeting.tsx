@@ -4,9 +4,10 @@ import { motion } from 'framer-motion';
 
 interface GreetingProps {
   username: string;
+  onAnimationComplete?: () => void;
 }
 
-const Greeting = ({ username }: GreetingProps) => {
+const Greeting = ({ username, onAnimationComplete }: GreetingProps) => {
   const [greeting, setGreeting] = useState<string>('');
 
   useEffect(() => {
@@ -23,13 +24,14 @@ const Greeting = ({ username }: GreetingProps) => {
   }, [username]);
 
   return (
-    <div className="flex h-screen min-h-8 items-center justify-center">
+    <div className="flex min-h-8 items-center justify-center">
       <motion.h1
         style={{ overflow: 'hidden', whiteSpace: 'nowrap' }}
         initial={{ width: 0 }}
         animate={{ width: '100%' }}
         transition={{ duration: 2, ease: 'easeInOut' }}
-        className="text-center text-2xl font-bold text-gray-100"
+        onAnimationComplete={onAnimationComplete}
+        className="text-center text-4xl font-bold text-gray-100"
       >
         {greeting}
       </motion.h1>
