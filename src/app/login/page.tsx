@@ -38,7 +38,7 @@ export default function LandingPage() {
   return (
     <div className="flex flex-col">
       <div className="flex min-h-screen items-center justify-center">
-        <div className="flex w-[55%] flex-col items-center justify-center gap-10">
+        <div className="flex w-full flex-col items-center justify-center gap-10">
           <div className="flex flex-col items-center justify-center gap-4">
             <Image
               src="/legislai-logo-fff.svg"
@@ -80,11 +80,11 @@ export default function LandingPage() {
           <FaAnglesDown className="text-3xl text-light-text" />
         </button>
 
-        <div className="flex h-screen w-[45%] p-3">
+        {/* <div className="flex h-screen w-[45%] p-3">
           <div className="h-full w-full rounded-lg bg-deep-sea-700 shadow-lg">
             <ChatSimulation />
           </div>
-        </div>
+        </div> */}
       </div>
 
       <LandingPricingSection
