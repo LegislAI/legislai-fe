@@ -26,6 +26,7 @@ export const sendMessageToRagApi = createAsyncThunk(
     const { conversationId, question, isNewConversation } = payload;
     let summary = '';
     let reference = '';
+    let field = '';
 
     if (isNewConversation === false) {
       dispatch(
@@ -81,6 +82,7 @@ export const sendMessageToRagApi = createAsyncThunk(
             const parsedChunk = JSON.parse(event.replace('data: ', ''));
             summary = parsedChunk.summary;
             reference = parsedChunk.references;
+            field = parsedChunk.field;
 
             dispatch(
               updateStreamingMessage({
@@ -95,11 +97,11 @@ export const sendMessageToRagApi = createAsyncThunk(
       dispatch(
         finishStreamingMessage({
           conversationId: payload.conversationId,
-          conversationName: '',
-          conversationField: '',
+          conversationName: summary,
+          conversationField: field,
           attachments: [
             {
-              summary: summary,
+              summary: '',
               reference: reference,
             },
           ],
