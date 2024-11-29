@@ -31,10 +31,9 @@ import { useSidebarContext } from '../../context/SidebarContext';
 type SidebarDropdownProps = {
   icon: ReactNode | string;
   text: string;
-  url: string;
 };
 
-const SidebarDropdown = ({ icon, text, url }: SidebarDropdownProps) => {
+const SidebarDropdown = ({ icon, text }: SidebarDropdownProps) => {
   const {
     isHistoryOpen,
     toggleHistoryOpen,
@@ -112,8 +111,11 @@ const SidebarDropdown = ({ icon, text, url }: SidebarDropdownProps) => {
   return (
     <>
       <div className="flex w-full flex-row items-center justify-between rounded-md p-2 hover:bg-deep-sea-800">
-        <Link href={url}>
-          <div className="flex w-full flex-row items-center gap-2">
+        <button
+          onClick={toggleHistoryOpen}
+          className="flex w-full flex-row items-center justify-between"
+        >
+          <div className="flex flex-row gap-2">
             {typeof icon === 'string' ? (
               <Image src={icon} alt="icon" width={22} height={22} />
             ) : isValidElement(icon) ? (
@@ -123,17 +125,13 @@ const SidebarDropdown = ({ icon, text, url }: SidebarDropdownProps) => {
             )}
             <span className="text-sm text-gray-100">{text}</span>
           </div>
-        </Link>
 
-        {isHistoryOpen ? (
-          <button onClick={toggleHistoryOpen}>
+          {isHistoryOpen ? (
             <IoCaretUp className="rounded-md text-xl text-gray-100" />
-          </button>
-        ) : (
-          <button onClick={toggleHistoryOpen}>
+          ) : (
             <IoCaretDown className="rounded-md text-xl text-gray-100" />
-          </button>
-        )}
+          )}
+        </button>
       </div>
 
       {isHistoryOpen && (

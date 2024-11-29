@@ -89,8 +89,7 @@ const SideBar = () => {
               />
               <SidebarDropdown
                 icon="/avatar.svg"
-                text="Assistente Jurídico"
-                url="/chat"
+                text="Histórico de Conversas"
               />
             </div>
           </div>
