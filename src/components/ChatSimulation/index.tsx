@@ -11,6 +11,7 @@ type Message = {
   messageIndex: number;
   sender: 'user' | 'assistant';
   message: string;
+  image?: string;
 };
 
 const ChatSimulation = () => {
@@ -22,9 +23,7 @@ const ChatSimulation = () => {
     },
   ]);
   const [isThinking, setIsThinking] = useState(false);
-  const [assistantResponse, setAssistantResponse] = useState<Message | null>(
-    null,
-  );
+  const [assistantResponse, setAssistantResponse] = useState<Message | null>(null);
 
   useEffect(() => {
     if (messages.length === 1) {
@@ -49,6 +48,33 @@ const ChatSimulation = () => {
         };
       }, 500);
     }
+
+    if (messages.length === 2 && messages[1].sender === 'assistant') {
+      const newUserMessage: Message = {
+        messageIndex: 3,
+        sender: 'user',
+        message: 'Podes me dizer de que se trata o seguinte documento?',
+        image: '/document-example.png',
+      };
+
+      setMessages(prev => [...prev, newUserMessage]);
+
+      // Simulate image response
+      const simulatedImageResponse: Message = {
+        messageIndex: 4,
+        sender: 'assistant',
+        message: 'Este parece ser um documento oficial. Infelizmente, não consigo ler o conteúdo específico da imagem.',
+      };
+
+      // Simulate thinking and response
+      setTimeout(() => {
+        setIsThinking(true);
+        setTimeout(() => {
+          setIsThinking(false);
+          setMessages(prev => [...prev, simulatedImageResponse]);
+        }, 3000);
+      }, 500);
+    }
   }, [messages.length]);
 
   useEffect(() => {
@@ -58,7 +84,7 @@ const ChatSimulation = () => {
   }, [assistantResponse]);
 
   return (
-    <div className="mx-auto flex h-[500px] w-full max-w-2xl flex-col overflow-hidden">
+    <div className="mx-auto flex h-full w-full max-w-2xl flex-col overflow-hidden">
       <div className="flex-grow space-y-4 overflow-y-auto px-6 py-10">
         <AnimatePresence>
           {messages.map(message => (
@@ -90,19 +116,44 @@ const ChatSimulation = () => {
                   className={`max-w-[80%] ${message.sender === 'user' ? 'bg-deep-sea-900 px-4 py-3' : 'px-2'} mb-3 rounded-xl text-gray-200`}
                 >
                   {message.sender === 'user' ? (
-                    <MarkdownRenderer
-                      content={message.message}
-                      className="text-gray-200"
-                    />
+                    <>
+                      {message.image && (
+                        <div className="max-w-full overflow-hidden rounded-lg">
+                          <Image
+                            src={message.image}
+                            alt="image"
+                            width={80}
+                            height={100}
+                            objectFit="cover"
+                            className="rounded-lg mt-1"
+                          />
+                        </div>
+                      )}
+                      <MarkdownRenderer
+                        content={message.message}
+                        className={`text-gray-200 ${message.image ? 'mt-3' : ''}`}
+                      />
+                    </>
                   ) : (
                     <div className="max-w-[80%] pl-2">
                       {isThinking ? (
                         <Thinking text="A analisar a sua pergunta ..." />
                       ) : (
-                        <MarkdownRenderer
-                          content={message.message}
-                          className="text-gray-200"
-                        />
+                        <>
+                          <MarkdownRenderer
+                            content={message.message}
+                            className="text-gray-200"
+                          />
+                          {message.image && (
+                            <Image
+                              src={message.image}
+                              alt="Assistant response image"
+                              width={300}
+                              height={200}
+                              className="mt-2 rounded-lg"
+                            />
+                          )}
+                        </>
                       )}
                     </div>
                   )}
