@@ -84,10 +84,6 @@ const MessageInput = ({ onSendMessage }: MessageInputProps) => {
     adjustTextareaHeight();
   }, [inputValue]);
 
-  useEffect(() => {
-    console.log('file:', files);
-  }, [files]);
-
   return (
     <div className="flex w-full flex-col">
       <div

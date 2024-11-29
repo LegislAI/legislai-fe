@@ -13,7 +13,7 @@ const Greeting = ({ username }: GreetingProps) => {
     const date = new Date();
     const hours = date.getHours();
 
-    if (hours >= 0 && hours < 12) {
+    if (hours >= 5 && hours < 12) {
       setGreeting(`Bom dia, ${username}`);
     } else if (hours >= 12 && hours < 17) {
       setGreeting(`Boa tarde, ${username}`);

@@ -5,10 +5,12 @@ export type Conversation = {
   messages: Message[];
   createdAt: string;
   updatedAt: string;
+  loading: string; // index of the message that is being sent
+  isNewConversation: boolean;
 };
 
 export type Message = {
-  messageId: string;
+  messageIndex: string;
   message: string;
   attachments: Atatchment[];
   sender: string;
@@ -16,9 +18,8 @@ export type Message = {
 };
 
 export type Atatchment = {
-  content: string;
-  designation: string;
-  url: string;
+  summary: string;
+  reference: string;
 };
 
 export interface ConversationApiResponse {
@@ -31,7 +32,7 @@ export interface ConversationApiResponse {
 }
 
 export interface MessageApiResponse {
-  message_id: string;
+  message_index: string;
   message: string;
   attachments: AttachmentApiResponse[];
   sender: string;
@@ -39,7 +40,6 @@ export interface MessageApiResponse {
 }
 
 export interface AttachmentApiResponse {
-  content: string;
-  designation: string;
-  url: string;
+  summary: string;
+  reference: string;
 }

@@ -15,16 +15,14 @@ export default function Chat() {
   const { isLoading } = useAuth();
   const dispatch = useAppDispatch();
 
-  let newConversationId = '';
-
-  const handleSendMessage = (messageText: string) => {
+  const handleSendMessage = async (messageText: string) => {
     try {
-      const data = dispatch(addMessageToNewConversation(messageText));
-      newConversationId = data.payload;
+      const data = await dispatch(addMessageToNewConversation(messageText));
+      const newConversationId = data.payload;
+
+      router.push(`/chat/${newConversationId}`);
     } catch (error) {
       console.error('Failed to send message', error);
-    } finally {
-      router.push(`/chat/${newConversationId}`);
     }
   };
 
