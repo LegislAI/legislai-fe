@@ -126,7 +126,7 @@ const MessageInput = ({ onSendMessage }: MessageInputProps) => {
           )}
           <textarea
             ref={textareaRef}
-            className={`w-full resize-none rounded-2xl bg-transparent py-4 ${user && user.plan === 'premium_plus' ? 'pl-14' : 'pl-6'} pr-16 text-sm text-gray-200 placeholder-gray-300 outline-none placeholder:text-sm`}
+            className={`w-full resize-none rounded-2xl bg-transparent py-4 ${user && user.plan === 'premium_plus' ? 'pl-12' : 'pl-6'} pr-16 text-sm text-gray-200 placeholder-gray-300 outline-none placeholder:text-sm`}
             rows={1}
             placeholder="Escreva uma mensagem..."
             value={inputValue}

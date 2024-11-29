@@ -23,7 +23,9 @@ const ChatSimulation = () => {
     },
   ]);
   const [isThinking, setIsThinking] = useState(false);
-  const [assistantResponse, setAssistantResponse] = useState<Message | null>(null);
+  const [assistantResponse, setAssistantResponse] = useState<Message | null>(
+    null,
+  );
 
   useEffect(() => {
     if (messages.length === 1) {
@@ -63,7 +65,8 @@ const ChatSimulation = () => {
       const simulatedImageResponse: Message = {
         messageIndex: 4,
         sender: 'assistant',
-        message: 'Este parece ser um documento oficial. Infelizmente, não consigo ler o conteúdo específico da imagem.',
+        message:
+          'Este parece ser um documento oficial. Infelizmente, não consigo ler o conteúdo específico da imagem.',
       };
 
       // Simulate thinking and response
@@ -75,7 +78,7 @@ const ChatSimulation = () => {
         }, 3000);
       }, 500);
     }
-  }, [messages.length]);
+  }, [messages, messages.length]);
 
   useEffect(() => {
     if (assistantResponse) {
@@ -125,7 +128,7 @@ const ChatSimulation = () => {
                             width={80}
                             height={100}
                             objectFit="cover"
-                            className="rounded-lg mt-1"
+                            className="mt-1 rounded-lg"
                           />
                         </div>
                       )}
