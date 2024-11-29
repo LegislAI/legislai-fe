@@ -5,10 +5,11 @@ import { useRef, useEffect } from 'react';
 import Image from 'next/image';
 import { FaCircleUser } from 'react-icons/fa6';
 
+import MarkdownRenderer from '@/components/MarkdownRenderer';
 import Thinking from '@/components/Thinking';
 import { Message } from '@/types';
 
-import MarkdownRenderer from '../MarkdownRenderer';
+import AttachmentRenderer from './AttachmentRenderer';
 
 type ChatProps = {
   messages: Message[];
@@ -48,11 +49,18 @@ const ConversationMessages = ({ messages, loading }: ChatProps) => {
             </div>
 
             {message.sender === 'user' ? (
-              <div className="chat chat-end w-full max-w-[80%]">
-                <div className="chat-bubble bg-deep-sea-800 px-4 py-2">
-                  <span className="whitespace-pre-wrap break-words text-sm text-gray-200">
-                    {message.message}
-                  </span>
+              <div className="chat chat-end w-full max-w-[60%]">
+                <div className="chat-bubble flex w-full flex-col bg-deep-sea-800 px-4 py-2">
+                  <div className="flex w-full flex-col gap-3">
+                    {message.attachments.map((attachment, index) => (
+                      <AttachmentRenderer key={index} {...attachment} />
+                    ))}
+                  </div>
+
+                  <MarkdownRenderer
+                    content={message.message}
+                    className="mt-2 text-gray-200"
+                  />
                 </div>
               </div>
             ) : (
