@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { FaAnglesDown } from 'react-icons/fa6';
 
+import ChatSimulation from '@/components/ChatSimulation';
 import LoginComponent from '@/components/LoginComponent';
 import RegisterComponent from '@/components/RegisterComponent';
 import TypewriterEffect from '@/components/TypewriterEffect';
@@ -13,7 +14,7 @@ import { CatchPhrases } from '@/data/phrases';
 import FAQ from '@/views/FAQ';
 import LandingPricingSection from '@/views/LandingPricingSection';
 
-export default function LoginPage() {
+export default function LandingPage() {
   const [isFlipped, setIsFlipped] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
   const pricingSectionRef = useRef<HTMLDivElement>(null);
@@ -37,7 +38,7 @@ export default function LoginPage() {
   return (
     <div className="flex flex-col">
       <div className="flex min-h-screen items-center justify-center">
-        <div className="flex w-[60%] flex-col items-center justify-center gap-10">
+        <div className="flex w-[55%] flex-col items-center justify-center gap-10">
           <div className="flex flex-col items-center justify-center gap-4">
             <Image
               src="/legislai-logo-fff.svg"
@@ -79,8 +80,10 @@ export default function LoginPage() {
           <FaAnglesDown className="text-3xl text-light-text" />
         </button>
 
-        <div className="flex h-screen w-[40%] p-3">
-          <div className="h-full w-full rounded-lg bg-deep-sea-700 shadow-lg"></div>
+        <div className="flex h-screen w-[45%] p-3">
+          <div className="h-full w-full rounded-lg bg-deep-sea-700 shadow-lg">
+            <ChatSimulation />
+          </div>
         </div>
       </div>
 
