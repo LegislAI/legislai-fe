@@ -1,7 +1,7 @@
 import {
   Conversation,
   Message,
-  Atatchment,
+  Reference,
   ConversationApiResponse,
   MessageApiResponse,
   AttachmentApiResponse,
@@ -32,7 +32,8 @@ const transformMessage = (message: MessageApiResponse): Message => {
   return {
     messageIndex: message.message_index,
     message: message.message,
-    attachments: message.attachments.map(attachment =>
+    attachments: [],
+    references: message.attachments.map(attachment =>
       transformAttachment(attachment),
     ),
     sender: message.sender,
@@ -40,9 +41,9 @@ const transformMessage = (message: MessageApiResponse): Message => {
   };
 };
 
-const transformAttachment = (attachment: AttachmentApiResponse): Atatchment => {
+const transformAttachment = (attachment: AttachmentApiResponse): Reference => {
   return {
-    summary: attachment.summary,
-    reference: attachment.reference,
+    designation: attachment.summary,
+    url: attachment.reference,
   };
 };

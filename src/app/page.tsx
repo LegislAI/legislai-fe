@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
+import { unwrapResult } from '@reduxjs/toolkit';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 
@@ -12,8 +13,9 @@ import { useAuth } from '@/context/AuthContext';
 import { useSidebarContext } from '@/context/SidebarContext';
 import data from '@/data/conversations.json';
 import { loadConversations } from '@/store/conversation/conversationSlice';
-import { addMessageToNewConversation } from '@/store/conversation/conversationSlice';
+import { addMessageToNewConversationThunk } from '@/store/conversation/conversationSlice';
 import { useAppDispatch } from '@/store/hooks';
+import { FileInfo } from '@/types';
 import { transformConversation } from '@/utils/transformer';
 
 export default function HomePage() {
@@ -25,10 +27,19 @@ export default function HomePage() {
   const [isSubtitleVisible, setIsSubtitleVisible] = useState(false);
   const [isMessageInputVisible, setIsMessageInputVisible] = useState(false);
 
-  const handleSendMessage = async (messageText: string) => {
+  const handleSendMessage = async (
+    messageText: string,
+    attachments: FileInfo[],
+  ) => {
     try {
-      const data = await dispatch(addMessageToNewConversation(messageText));
-      const newConversationId = data.payload;
+      const action = await dispatch(
+        addMessageToNewConversationThunk({
+          message: messageText,
+          attachments: attachments,
+        }),
+      );
+
+      const newConversationId = unwrapResult(action);
 
       router.push(`/chat/${newConversationId}`);
     } catch (error) {

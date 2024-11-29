@@ -2,7 +2,8 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { v4 as uuidv4 } from 'uuid';
 
-import { Atatchment, Conversation } from '@/types';
+import { Reference, Conversation } from '@/types';
+import { FileInfo } from '@/types/conversations';
 
 interface ConversationState {
   conversations: { [conversationId: string]: Conversation };
@@ -17,6 +18,7 @@ const initialState: ConversationState = {
 interface StreamingPayload {
   conversationId: string;
   question: string;
+  attachments?: FileInfo[];
   isNewConversation: boolean;
 }
 
@@ -32,7 +34,8 @@ export const sendMessageToRagApi = createAsyncThunk(
       dispatch(
         addMessage({
           conversationId: payload.conversationId,
-          message: payload.question,
+          question: payload.question,
+          attachments: payload.attachments || [],
         }),
       );
     }
@@ -99,10 +102,10 @@ export const sendMessageToRagApi = createAsyncThunk(
           conversationId: payload.conversationId,
           conversationName: summary,
           conversationField: field,
-          attachments: [
+          references: [
             {
-              summary: '',
-              reference: reference,
+              designation: '',
+              url: reference,
             },
           ],
         }),
@@ -117,10 +120,27 @@ export const sendMessageToRagApi = createAsyncThunk(
   },
 );
 
-interface AddMessagePayload {
-  conversationId: string;
+interface AddMessageToNewConversationPayload {
   message: string;
+  attachments: FileInfo[];
 }
+
+export const addMessageToNewConversationThunk = createAsyncThunk(
+  'conversation/addMessageToNewConversation',
+  async (payload: AddMessageToNewConversationPayload, { dispatch }) => {
+    const conversationId = uuidv4().toString();
+
+    dispatch(
+      addMessageToNewConversation({
+        conversationId: conversationId,
+        question: payload.message,
+        attachments: payload.attachments,
+      }),
+    );
+
+    return conversationId;
+  },
+);
 
 export const conversationSlice = createSlice({
   name: 'conversation',
@@ -136,16 +156,24 @@ export const conversationSlice = createSlice({
       });
     },
 
-    addMessage: (state, action: PayloadAction<AddMessagePayload>) => {
-      const { conversationId, message } = action.payload;
+    addMessage: (
+      state,
+      action: PayloadAction<{
+        conversationId: string;
+        question: string;
+        attachments: FileInfo[];
+      }>,
+    ) => {
+      const { conversationId, question, attachments } = action.payload;
       const lastMessageIndex =
         state.conversations[conversationId].messages.length - 1;
       const currentDateTime = new Date().toISOString();
 
       state.conversations[conversationId].messages.push({
         messageIndex: (lastMessageIndex + 1).toString(),
-        message: message,
-        attachments: [],
+        message: question,
+        attachments: attachments,
+        references: [],
         sender: 'user',
         createdAt: currentDateTime,
       });
@@ -153,6 +181,7 @@ export const conversationSlice = createSlice({
         messageIndex: (lastMessageIndex + 2).toString(),
         message: '',
         attachments: [],
+        references: [],
         sender: 'ai',
         createdAt: '',
       });
@@ -162,9 +191,15 @@ export const conversationSlice = createSlice({
       ).toString();
     },
 
-    addMessageToNewConversation: (state, action: PayloadAction<string>) => {
-      const message = action.payload;
-      const conversationId = uuidv4().toString();
+    addMessageToNewConversation: (
+      state,
+      action: PayloadAction<{
+        conversationId: string;
+        question: string;
+        attachments: FileInfo[];
+      }>,
+    ) => {
+      const { conversationId, question, attachments } = action.payload;
       const currentDateTime = new Date().toISOString();
 
       state.conversations[conversationId] = {
@@ -174,8 +209,9 @@ export const conversationSlice = createSlice({
         messages: [
           {
             messageIndex: '0',
-            message: message,
-            attachments: [],
+            message: question,
+            attachments: attachments,
+            references: [],
             sender: 'user',
             createdAt: currentDateTime,
           },
@@ -183,6 +219,7 @@ export const conversationSlice = createSlice({
             messageIndex: '1',
             message: '',
             attachments: [],
+            references: [],
             sender: 'ai',
             createdAt: currentDateTime,
           },
@@ -192,8 +229,6 @@ export const conversationSlice = createSlice({
         loading: '1',
         isNewConversation: true,
       };
-
-      action.payload = conversationId;
     },
 
     updateStreamingMessage: (
@@ -225,20 +260,18 @@ export const conversationSlice = createSlice({
         conversationId: string;
         conversationName: string;
         conversationField: string;
-        attachments: Atatchment[];
+        references: Reference[];
       }>,
     ) => {
       const {
         conversationId,
         conversationName,
         conversationField,
-        attachments,
+        references,
       } = action.payload;
       const lastMessageIndex =
         state.conversations[conversationId].messages.length - 1;
       const currentDateTime = new Date().toISOString();
-
-      // TODO: try to improve this to avoid too many assignments
 
       if (state.conversations[conversationId].isNewConversation) {
         state.conversations[conversationId].conversationName = conversationName;
@@ -249,7 +282,7 @@ export const conversationSlice = createSlice({
 
       state.conversations[conversationId].messages[
         lastMessageIndex
-      ].attachments = attachments;
+      ].references = references;
       state.conversations[conversationId].updatedAt = currentDateTime;
       state.conversations[conversationId].loading = '';
     },
