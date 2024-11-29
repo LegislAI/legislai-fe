@@ -5,13 +5,17 @@ import { useRef, useEffect } from 'react';
 import Image from 'next/image';
 import { FaCircleUser } from 'react-icons/fa6';
 
+import Thinking from '@/components/Thinking';
 import { Message } from '@/types';
+
+import MarkdownRenderer from '../MarkdownRenderer';
 
 type ChatProps = {
   messages: Message[];
+  loading: string;
 };
 
-const ConversationMessages = ({ messages }: ChatProps) => {
+const ConversationMessages = ({ messages, loading }: ChatProps) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -24,7 +28,7 @@ const ConversationMessages = ({ messages }: ChatProps) => {
     <div className="flex h-full w-full flex-col gap-4 overflow-y-auto px-6">
       {messages.map(message => (
         <div
-          key={message.messageId}
+          key={message.messageIndex}
           className={`flex w-full items-center ${message.sender === 'user' ? 'justify-end' : 'justify-start'} mb-4`}
         >
           <div
@@ -52,10 +56,15 @@ const ConversationMessages = ({ messages }: ChatProps) => {
                 </div>
               </div>
             ) : (
-              <div className="max-w-[80%] pl-1">
-                <span className="whitespace-pre-line text-sm text-gray-200">
-                  {message.message}
-                </span>
+              <div className="max-w-[80%] pl-2">
+                {message.messageIndex === loading ? (
+                  <Thinking text="A analisar a sua pergunta ..." />
+                ) : (
+                  <MarkdownRenderer
+                    content={message.message}
+                    className="text-gray-200"
+                  />
+                )}
               </div>
             )}
           </div>

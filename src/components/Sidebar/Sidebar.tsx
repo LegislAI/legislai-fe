@@ -22,14 +22,27 @@ const SideBar = () => {
   const { isOpen, toggleSidebar } = useSidebarContext();
   const { logout, user, isLoading } = useAuth();
 
-  if (isPublicRoute || isLoading) {
+  const transformUserPlan = (plan: string) => {
+    switch (plan) {
+      case 'free':
+        return 'Plano Gratuito';
+      case 'premium':
+        return 'Plano Intermédio';
+      case 'premium_plus':
+        return 'Plano Avançado';
+      default:
+        return 'Plano Gratuito';
+    }
+  };
+
+  if (isPublicRoute || isLoading || !user) {
     return null;
   }
 
   const userInfo = {
-    username: user?.username,
-    email: user?.email,
-    plan: user?.plan,
+    username: user.username,
+    email: user.email,
+    plan: user.plan ? transformUserPlan(user.plan) : undefined,
   };
 
   return (

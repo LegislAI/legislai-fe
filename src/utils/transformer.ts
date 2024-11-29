@@ -23,12 +23,14 @@ export const transformConversation = (
     messages: conversation.messages.map(message => transformMessage(message)),
     createdAt: conversation.created_at || '',
     updatedAt: conversation.updated_at || '',
+    loading: false ? '' : '',
+    isNewConversation: false,
   };
 };
 
 const transformMessage = (message: MessageApiResponse): Message => {
   return {
-    messageId: message.message_id,
+    messageIndex: message.message_index,
     message: message.message,
     attachments: message.attachments.map(attachment =>
       transformAttachment(attachment),
@@ -40,8 +42,7 @@ const transformMessage = (message: MessageApiResponse): Message => {
 
 const transformAttachment = (attachment: AttachmentApiResponse): Atatchment => {
   return {
-    content: attachment.content,
-    designation: attachment.designation,
-    url: attachment.url,
+    summary: attachment.summary,
+    reference: attachment.reference,
   };
 };

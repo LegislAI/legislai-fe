@@ -27,6 +27,7 @@ export default function HomePage() {
           created_at: message.timestamp,
           attachments: message.attachments || [],
         })),
+        loading: false,
       };
 
       return transformConversation(conversationWithTimestamps);

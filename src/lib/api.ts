@@ -42,6 +42,15 @@ const createAPIInstance = (baseURL: string) => {
 export const AUTH_API = createAPIInstance(
   process.env.NEXT_PUBLIC_AUTH_API_BASE_URL!,
 );
+
 export const USERS_API = createAPIInstance(
   process.env.NEXT_PUBLIC_USERS_API_BASE_URL!,
+);
+
+export const CONVERSATIONS_API = createAPIInstance(
+  process.env.NEXT_PUBLIC_CONVERSATIONS_API_BASE_URL!,
+);
+
+export const RAG_API = createAPIInstance(
+  process.env.NEXT_PUBLIC_RAG_API_BASE_URL!,
 );
