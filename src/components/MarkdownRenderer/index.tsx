@@ -38,6 +38,12 @@ const MarkdownRenderer = ({
             {...props}
           />
         ),
+        li: ({ ...props }) => (
+          <li
+            className="list-inside list-disc pl-2 marker:text-white"
+            {...props}
+          />
+        ),
       }}
     >
       {content}
