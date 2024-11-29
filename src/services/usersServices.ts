@@ -15,3 +15,25 @@ export const getUserInfo = async () => {
     throw error;
   }
 };
+
+export const updateUserPlan = async (
+  plan: string,
+  token: string,
+  paymentMethod: string,
+) => {
+  try {
+    const response = await USERS_API.patch('/plan', {
+      plan_name: plan,
+      token: token,
+      payment_method: paymentMethod,
+    });
+
+    if (response.status === 200) {
+      return response;
+    } else {
+      throw new Error('Error updating user plan.');
+    }
+  } catch (error) {
+    throw error;
+  }
+}

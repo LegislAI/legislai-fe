@@ -109,7 +109,7 @@ const MessageInput = ({ onSendMessage }: MessageInputProps) => {
           </div>
         )}
         <div className="relative flex w-full gap-4 rounded-2xl bg-deep-sea-900 shadow-lg">
-          {user && user.plan != 'free' && (
+          {user && user.plan === 'premium_plus' && (
             <button
               className="absolute left-4 top-1/2 -translate-y-1/2"
               onClick={handleFileUpload}
