@@ -58,7 +58,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         userId: response.data.user_id,
         email: response.data.email,
         username: response.data.username,
-        plan: response.data.plan,
+        // plan: response.data.plan,
+        plan: 'premium_plus',
         nextBillingDate: response.data.next_billing_date,
       };
 
