@@ -62,7 +62,7 @@ const PricingCard = ({
             className={`w-full rounded-b-2xl py-3 font-bold ${
               isCurrentPlan
                 ? 'disabled cursor-default bg-aquamarine-500 px-8 text-dark-text'
-                : 'hover:bg-pumpkin-600/80 bg-accent px-4 text-dark-text'
+                : 'bg-accent px-4 text-dark-text hover:bg-pumpkin-600/80'
             }`}
             onClick={() => subscribePlanCallback && subscribePlanCallback(id)}
           >

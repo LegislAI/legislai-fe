@@ -36,4 +36,4 @@ export const updateUserPlan = async (
   } catch (error) {
     throw error;
   }
-}
+};
