@@ -72,13 +72,19 @@ const UserPanel = ({ userInfo, handleLogout }: UserPanelProps) => {
             <Button
               icon={<IoSparklesOutline className="text-xl text-gray-100" />}
               text="Atualizar plano"
-              onClick={() => console.log('Atualizar plano')}
+              onClick={() => {
+                router.push('/atualizar-plano');
+                setIsOpen(false);
+              }}
             />
 
             <Button
               icon={<IoSettingsOutline className="text-xl text-gray-100" />}
               text="Definições"
-              onClick={() => router.push('/definicoes')}
+              onClick={() => {
+                router.push('/definicoes');
+                setIsOpen(false);
+              }}
             />
 
             <div className="my-2 w-full border-t border-gray-100"></div>

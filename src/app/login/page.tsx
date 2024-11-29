@@ -11,7 +11,7 @@ import RegisterComponent from '@/components/RegisterComponent';
 import TypewriterEffect from '@/components/TypewriterEffect';
 import { CatchPhrases } from '@/data/phrases';
 import FAQ from '@/views/FAQ';
-import PricingSection from '@/views/PricingSection';
+import LandingPricingSection from '@/views/LandingPricingSection';
 
 export default function LoginPage() {
   const [isFlipped, setIsFlipped] = useState(false);
@@ -84,7 +84,7 @@ export default function LoginPage() {
         </div>
       </div>
 
-      <PricingSection
+      <LandingPricingSection
         pricingSectionRef={pricingSectionRef}
         handleScrollToQuestions={handleScrollToQuestions}
       />

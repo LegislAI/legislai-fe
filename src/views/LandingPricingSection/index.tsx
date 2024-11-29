@@ -2,15 +2,15 @@ import { FaAnglesDown } from 'react-icons/fa6';
 
 import PricingCard from '@/components/PricingCard';
 
-interface PricingSectionProps {
+interface LandingPricingSectionProps {
   pricingSectionRef: React.RefObject<HTMLDivElement>;
   handleScrollToQuestions: () => void;
 }
 
-const PricingSection = ({
+const LandingPricingSection = ({
   pricingSectionRef,
   handleScrollToQuestions,
-}: PricingSectionProps) => {
+}: LandingPricingSectionProps) => {
   return (
     <div
       ref={pricingSectionRef}
@@ -21,16 +21,19 @@ const PricingSection = ({
       </h1>
       <div className="mb-10 flex w-full flex-row items-center justify-around">
         <PricingCard
+          id="free"
           title="BÁSICO"
           price="0,00"
           features={['15 perguntas por mês', 'Recomendaçaõ de advogados']}
         />
         <PricingCard
+          id="premium"
           title="INTERMÉDIO"
           price="4,99"
           features={['Sem limite de perguntas', 'Recomendaçaõ de advogados']}
         />
         <PricingCard
+          id="premium_plus"
           title="AVANÇADO"
           price="7,99"
           features={[
@@ -51,4 +54,4 @@ const PricingSection = ({
   );
 };
 
-export default PricingSection;
+export default LandingPricingSection;

@@ -51,7 +51,7 @@ const config: Config = {
           '950': '#011e14', // Original
         },
 
-        primary: '#7efbd1',
+        primary: '#60f5cd',
         // primary
         aquamarine: {
           '50': '#eafff8',
@@ -79,6 +79,20 @@ const config: Config = {
           '800': '#164f3f',
           '900': '#134135',
           '950': '#09251e',
+        },
+
+        pumpkin: {
+          '50': '#fff7ed',
+          '100': '#ffedd5',
+          '200': '#fed6aa',
+          '300': '#fcb975',
+          '400': '#fa913d',
+          '500': '#f8741b', // Original
+          '600': '#e9560d',
+          '700': '#c1400d',
+          '800': '#993313',
+          '900': '#7b2c13',
+          '950': '#431407',
         },
       },
       fontFamily: {
